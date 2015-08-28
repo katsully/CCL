@@ -181,15 +181,28 @@ Shape* ShapeDetection::findNearestMatch( Shape trackedShape, vector< Shape > &sh
     return closestShape;
 }
 
+cv::Mat ShapeDetection::removeBlack( cv::Mat input, short nearLimit, short farLimit )
+{
+    for( int y = 0; y < input.rows; y++ ) {
+        for( int x = 0; x < input.cols; x++ ) {
+            // if a shape is too close or too far away, set the depth to a fixed number
+            if( input.at<short>(y,x) < nearLimit || input.at<short>(y,x) > farLimit ) {
+                input.at<short>(y,x) = farLimit;
+            }
+        }
+    }
+    return input;
+}
+
 void ShapeDetection::draw()
 {
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
-        if(mDrawShapes){
+//        if(mDrawShapes){
             glBegin( GL_POLYGON );
-        } else{
-            glBegin(GL_POINTS);
-        }
+//        } else{
+//            glBegin(GL_POINTS);
+//        }
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
             if(mTrackedShapes[i].moving){
                 gl::color( Color( 0.0f, 1.0f, 0.0f ) );

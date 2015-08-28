@@ -57,7 +57,6 @@ public:
 	void						keyDown( ci::app::KeyEvent event );
 	void						prepareSettings( ci::app::AppBasic::Settings* settings );
 	void						setup();
-    //void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions );
     
     ShapeDetection    mShapeDetection;
 private:
@@ -80,6 +79,7 @@ private:
 	ci::gl::TextureRef			mTexture;
 	std::vector<nite::UserData>	mUsers;
 	void						onUser( nite::UserTrackerFrameRef, const OpenNI::DeviceOptions& deviceOptions );
+    void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions );
 
 	void						screenShot();
 };
@@ -93,6 +93,7 @@ using namespace std;
 
 void UserApp::draw()
 {
+    console() << "should be here" << endl;
 	gl::setViewport( getWindowBounds() );
 	gl::clear( Colorf::black() );
 	gl::setMatricesWindow( getWindowSize() );
@@ -106,21 +107,26 @@ void UserApp::draw()
 		}
 		gl::draw( mTexture, mTexture->getBounds(), getWindowBounds() );
 	}
-
+    
 	gl::setMatrices( mCamera );
 	gl::color( Colorf( 1.0f, 0.0f, 0.0f ) );
-	for ( std::vector<nite::UserData>::const_iterator iter = mUsers.begin(); iter != mUsers.end(); ++iter ) {
+	for ( std::vector<nite::UserData>::const_iterator iter = mUsers.begin(); iter != mUsers.end(); ++iter )
+    {
 		const nite::Skeleton& skeleton = iter->getSkeleton();
 		if ( skeleton.getState() == nite::SKELETON_TRACKED ) {
 			gl::begin( GL_LINES );
 			for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
-				const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
+                console() << iter->mJointA << endl;
+                const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
 				const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
+               // cout << joint0.getPosition() << endl;
 
 				Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
 				Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
 				v0.x = -v0.x;
 				v1.x = -v1.x;
+                console() << "HERE" << std::endl;
+                console() << v0.x << " " << v0.y << std::endl;
 
 				gl::vertex( v0 );
 				gl::vertex( v1 );
@@ -148,7 +154,8 @@ void UserApp::keyDown( KeyEvent event )
 
 void UserApp::onUser( nite::UserTrackerFrameRef frame, const OpenNI::DeviceOptions& deviceOptions )
 {
-	mChannel	= OpenNI::toChannel16u( frame.getDepthFrame() ); 
+    mShapeDetection.onDepth( frame.getDepthFrame(), deviceOptions );
+    mChannel	= OpenNI::toChannel16u( frame.getDepthFrame() );
 	mUsers		= OpenNI::toVector( frame.getUsers() );
 	for ( vector<nite::UserData>::iterator iter = mUsers.begin(); iter != mUsers.end(); ++iter ) {
 		if ( iter->isNew() ) {
@@ -159,8 +166,9 @@ void UserApp::onUser( nite::UserTrackerFrameRef frame, const OpenNI::DeviceOptio
 	}
 }
 
-//void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions )
-//{}
+void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions )
+{
+}
 
 
 void UserApp::prepareSettings( Settings* settings )
@@ -176,6 +184,7 @@ void UserApp::screenShot()
 
 void UserApp::setup()
 {
+    cout << "BABABABABABBAB" << endl;
     mShapeDetection = ShapeDetection();
     
 	mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_NECK ) );
@@ -193,6 +202,7 @@ void UserApp::setup()
 	mBones.push_back( Bone( nite::JOINT_LEFT_KNEE,		nite::JOINT_LEFT_FOOT ) );
 	mBones.push_back( Bone( nite::JOINT_RIGHT_HIP,		nite::JOINT_RIGHT_KNEE ) );
 	mBones.push_back( Bone( nite::JOINT_RIGHT_KNEE,		nite::JOINT_RIGHT_FOOT ) );
+   
 
 	mCamera = CameraPersp( getWindowWidth(), getWindowHeight(), 45.0f, 1.0f, 5000.0f );
 	mCamera.lookAt( Vec3f::zero(), Vec3f::zAxis(), Vec3f::yAxis() );
@@ -201,15 +211,13 @@ void UserApp::setup()
 	try {
 		mDevice = mDeviceManager->createDevice( OpenNI::DeviceOptions().enableUserTracking() );
 	} catch ( OpenNI::ExcDeviceNotAvailable ex ) {
-		console() << ex.what() << endl;
+		console() << "exception with openni" << ex.what() << endl;
 		quit();
 		return;
 	}
 
 	mDevice->getUserTracker().setSkeletonSmoothingFactor( 0.5f );
 	mDevice->connectUserEventHandler( &UserApp::onUser, this );
-    // shape detection
-   // mDevice->connectDepthEventHandler( &UserApp::onDepth, this);
 	mDevice->start();
 }
 
