@@ -14,6 +14,8 @@
 		<string>github.com:wieden-kennedy/Cinder-OpenNI.git</string>
 		<key>AD4B458D0D225ED63FAE0155615993B7D3ECE020</key>
 		<string>github.com:cinder/Cinder.git</string>
+		<key>D1D31A4D1B0CCC9B03A2D107004B38DEFF7D8FBE</key>
+		<string>github.com:cinder/Cinder-OpenCV.git</string>
 		<key>EAA2F3AA524D2EB31D939CC0AE6ABEEA2B25F107</key>
 		<string>github.com:katsully/CCL.git</string>
 	</dict>
@@ -25,6 +27,8 @@
 		<string>../../../../Cinder/blocks/Cinder-OpenNI</string>
 		<key>AD4B458D0D225ED63FAE0155615993B7D3ECE020</key>
 		<string>../../../../Cinder</string>
+		<key>D1D31A4D1B0CCC9B03A2D107004B38DEFF7D8FBE</key>
+		<string>../../../../Cinder/blocks/OpenCV</string>
 		<key>EAA2F3AA524D2EB31D939CC0AE6ABEEA2B25F107</key>
 		<string>../../..</string>
 	</dict>
@@ -59,6 +63,14 @@
 			<string>24A3E1FBD1E6307898B81291166E85892EE9AB53</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Cinder-OpenNI</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D1D31A4D1B0CCC9B03A2D107004B38DEFF7D8FBE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OpenCV</string>
 		</dict>
 	</array>
 </dict>

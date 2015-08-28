@@ -43,6 +43,7 @@
 #include "cinder/Channel.h"
 #include "cinder/gl/Texture.h"
 #include "Cinder-OpenNI.h"
+#include "ShapeDetection.h"
 
 /* 
  * This application demonstrates how to display NiTE users.
@@ -56,6 +57,9 @@ public:
 	void						keyDown( ci::app::KeyEvent event );
 	void						prepareSettings( ci::app::AppBasic::Settings* settings );
 	void						setup();
+    //void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions );
+    
+    ShapeDetection    mShapeDetection;
 private:
 	struct Bone
 	{
@@ -140,6 +144,7 @@ void UserApp::draw()
 			gl::end();
 		}
 	}
+    mShapeDetection.draw();
 }
 
 void UserApp::keyDown( KeyEvent event )
@@ -168,17 +173,11 @@ void UserApp::onUser( nite::UserTrackerFrameRef frame, const OpenNI::DeviceOptio
 			mDevice->getUserTracker().stopSkeletonTracking( iter->getId() );
 		}
 	}
-    
-    // Iterate through points?
-    for ( vector<Bone>::iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
-        
-    }
-    
-    // shape detection
-    // convert frame from the camera to an OpenCV matrix
-    // mInput = toOcv( OpenNI::toChannel16u(frame) );
-    
 }
+
+//void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions )
+//{}
+
 
 void UserApp::prepareSettings( Settings* settings )
 {
@@ -193,6 +192,8 @@ void UserApp::screenShot()
 
 void UserApp::setup()
 {
+    mShapeDetection = ShapeDetection();
+    
 	mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_NECK ) );
 	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_LEFT_ELBOW ) );
 	mBones.push_back( Bone( nite::JOINT_LEFT_ELBOW,		nite::JOINT_LEFT_HAND ) );
@@ -223,6 +224,8 @@ void UserApp::setup()
 
 	mDevice->getUserTracker().setSkeletonSmoothingFactor( 0.5f );
 	mDevice->connectUserEventHandler( &UserApp::onUser, this );
+    // shape detection
+   // mDevice->connectDepthEventHandler( &UserApp::onDepth, this);
 	mDevice->start();
 }
 
