@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B8C52907-03F5-4C59-8BD9-9117733F2BD7</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>24A3E1FBD1E6307898B81291166E85892EE9AB53</key>
+		<string>github.com:wieden-kennedy/Cinder-OpenNI.git</string>
+		<key>AD4B458D0D225ED63FAE0155615993B7D3ECE020</key>
+		<string>github.com:cinder/Cinder.git</string>
+	</dict>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>24A3E1FBD1E6307898B81291166E85892EE9AB53</key>
+		<string>Cinder/blocks/Cinder-OpenNI/</string>
+		<key>AD4B458D0D225ED63FAE0155615993B7D3ECE020</key>
+		<string>Cinder/</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:cinder/Cinder.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AD4B458D0D225ED63FAE0155615993B7D3ECE020</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AD4B458D0D225ED63FAE0155615993B7D3ECE020</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Cinder</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>24A3E1FBD1E6307898B81291166E85892EE9AB53</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Cinder-OpenNI</string>
+		</dict>
+	</array>
+</dict>
+</plist>
