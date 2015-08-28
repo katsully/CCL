@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25EBC67B1B90BF260066DB24 /* joints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EBC6791B90BF260066DB24 /* joints.cpp */; };
 		AE595CF917F399A900A882A2 /* UserApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE595CF817F399A900A882A2 /* UserApp.cpp */; };
 		AEAFFA2517F37D6C0033EE32 /* libNiTE2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAFFA1D17F37D6C0033EE32 /* libNiTE2.dylib */; };
 		AEAFFA2617F37D6C0033EE32 /* libOpenNI2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAFFA1E17F37D6C0033EE32 /* libOpenNI2.dylib */; };
@@ -53,22 +54,24 @@
 		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		25EBC6791B90BF260066DB24 /* joints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = joints.cpp; sourceTree = "<group>"; };
+		25EBC67A1B90BF260066DB24 /* joints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joints.h; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4B9EA6670FB94B019CB80224 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		AE595CF817F399A900A882A2 /* UserApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserApp.cpp; path = ../src/UserApp.cpp; sourceTree = "<group>"; };
-		AEAFFA1D17F37D6C0033EE32 /* libNiTE2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libNiTE2.dylib; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/lib/libNiTE2.dylib"; sourceTree = "<absolute>"; };
+		AEAFFA1D17F37D6C0033EE32 /* libNiTE2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libNiTE2.dylib; path = "../../Cinder/blocks/Cinder-OpenNI/lib/libNiTE2.dylib"; sourceTree = "<group>"; };
 		AEAFFA1E17F37D6C0033EE32 /* libOpenNI2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenNI2.dylib; path = "../../Cinder/blocks/Cinder-OpenNI/lib/libOpenNI2.dylib"; sourceTree = "<group>"; };
 		AEAFFA1F17F37D6C0033EE32 /* NiTE.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = NiTE.ini; path = "../../Cinder/blocks/Cinder-OpenNI/lib/NiTE.ini"; sourceTree = "<group>"; };
-		AEAFFA2017F37D6C0033EE32 /* NiTE2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NiTE2; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/lib/NiTE2"; sourceTree = "<absolute>"; };
-		AEAFFA2217F37D6C0033EE32 /* OpenNI.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenNI.ini; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/lib/OpenNI.ini"; sourceTree = "<absolute>"; };
-		AEAFFA2317F37D6C0033EE32 /* OpenNI2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenNI2; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/lib/OpenNI2"; sourceTree = "<absolute>"; };
-		AEBB7EBA17BAC4DD00A2CC19 /* Cinder-OpenNI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "Cinder-OpenNI.cpp"; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/src/Cinder-OpenNI.cpp"; sourceTree = "<absolute>"; };
-		AEBB7EBB17BAC4DD00A2CC19 /* Cinder-OpenNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Cinder-OpenNI.h"; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/src/Cinder-OpenNI.h"; sourceTree = "<absolute>"; };
+		AEAFFA2017F37D6C0033EE32 /* NiTE2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NiTE2; path = "../../Cinder/blocks/Cinder-OpenNI/lib/NiTE2"; sourceTree = "<group>"; };
+		AEAFFA2217F37D6C0033EE32 /* OpenNI.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenNI.ini; path = "../../Cinder/blocks/Cinder-OpenNI/lib/OpenNI.ini"; sourceTree = "<group>"; };
+		AEAFFA2317F37D6C0033EE32 /* OpenNI2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenNI2; path = "../../Cinder/blocks/Cinder-OpenNI/lib/OpenNI2"; sourceTree = "<group>"; };
+		AEBB7EBA17BAC4DD00A2CC19 /* Cinder-OpenNI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "Cinder-OpenNI.cpp"; path = "../../Cinder/blocks/Cinder-OpenNI/src/Cinder-OpenNI.cpp"; sourceTree = "<group>"; };
+		AEBB7EBB17BAC4DD00A2CC19 /* Cinder-OpenNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Cinder-OpenNI.h"; path = "../../Cinder/blocks/Cinder-OpenNI/src/Cinder-OpenNI.h"; sourceTree = "<group>"; };
 		AEBB7F3B17BAEAFA00A2CC19 /* UserApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEBB7F3C17BAEAFA00A2CC19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/samples/UserApp/xcode/Info.plist"; sourceTree = "<absolute>"; };
+		AEBB7F3C17BAEAFA00A2CC19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../../Cinder/blocks/Cinder-OpenNI/samples/UserApp/xcode/Info.plist"; sourceTree = "<group>"; };
 		E3FE71DEC3104A3AB8011460 /* UserApp_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserApp_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				AE595CF817F399A900A882A2 /* UserApp.cpp */,
+				25EBC6791B90BF260066DB24 /* joints.cpp */,
+				25EBC67A1B90BF260066DB24 /* joints.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE595CF917F399A900A882A2 /* UserApp.cpp in Sources */,
+				25EBC67B1B90BF260066DB24 /* joints.cpp in Sources */,
 				AEBB7F1717BAEAFA00A2CC19 /* Cinder-OpenNI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,7 +294,7 @@
 		AEBB7F3917BAEAFA00A2CC19 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = /Users/Kat/Cinder;
+				CINDER_PATH = /Users/smorad/Cinder;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -318,7 +324,7 @@
 		AEBB7F3A17BAEAFA00A2CC19 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = /Users/Kat/Cinder;
+				CINDER_PATH = /Users/smorad/Cinder;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

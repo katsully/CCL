@@ -102,14 +102,22 @@ void UserApp::draw()
 		}
 		gl::draw( mTexture, mTexture->getBounds(), getWindowBounds() );
 	}
+    
 
 	gl::setMatrices( mCamera );
+
+    
 	gl::color( Colorf( 1.0f, 0.0f, 0.0f ) );
 	for ( std::vector<nite::UserData>::const_iterator iter = mUsers.begin(); iter != mUsers.end(); ++iter ) {
 		const nite::Skeleton& skeleton = iter->getSkeleton();
+        
 		if ( skeleton.getState() == nite::SKELETON_TRACKED ) {
-			gl::begin( GL_LINES );
+	       
+            gl::begin( GL_POINTS );
+            
+            
 			for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
+                
 				const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
 				const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
 
@@ -117,9 +125,17 @@ void UserApp::draw()
 				Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
 				v0.x = -v0.x;
 				v1.x = -v1.x;
-
+                
+                // PRINT VALUES
+                //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
+                if (iter->mJointA == 0){
+                console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
+                }
+                
 				gl::vertex( v0 );
 				gl::vertex( v1 );
+                
+                
 			}
 			gl::end();
 		}
@@ -153,9 +169,14 @@ void UserApp::onUser( nite::UserTrackerFrameRef frame, const OpenNI::DeviceOptio
 		}
 	}
     
+    // Iterate through points?
+    for ( vector<Bone>::iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
+        
+    }
+    
     // shape detection
     // convert frame from the camera to an OpenCV matrix
-//    mInput = toOcv( OpenNI::toChannel16u(frame) );
+    // mInput = toOcv( OpenNI::toChannel16u(frame) );
     
 }
 
