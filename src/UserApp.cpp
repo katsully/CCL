@@ -152,6 +152,11 @@ void UserApp::onUser( nite::UserTrackerFrameRef frame, const OpenNI::DeviceOptio
 			mDevice->getUserTracker().stopSkeletonTracking( iter->getId() );
 		}
 	}
+    
+    // shape detection
+    // convert frame from the camera to an OpenCV matrix
+//    mInput = toOcv( OpenNI::toChannel16u(frame) );
+    
 }
 
 void UserApp::prepareSettings( Settings* settings )
