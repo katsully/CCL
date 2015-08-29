@@ -93,6 +93,9 @@ using namespace std;
 
 void UserApp::draw()
 {
+    
+    
+    
 	gl::setViewport( getWindowBounds() );
 	gl::clear( Colorf::black() );
 	gl::setMatricesWindow( getWindowSize() );
@@ -111,14 +114,19 @@ void UserApp::draw()
 	gl::setMatrices( mCamera );
 
     
-	gl::color( Colorf( 1.0f, 0.0f, 0.0f ) );
+	
 	for ( std::vector<nite::UserData>::const_iterator iter = mUsers.begin(); iter != mUsers.end(); ++iter ) {
 		const nite::Skeleton& skeleton = iter->getSkeleton();
         
 		if ( skeleton.getState() == nite::SKELETON_TRACKED ) {
-	       
+            
+            gl::enableAlphaBlending();
+            gl::color( ColorA(1.0f, 1.0f, 1.0f, 0.3f) );
+            glPointSize(5.0);
+            
             gl::begin( GL_POINTS );
             
+            gl::disableAlphaBlending();
             
 			for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
                 
@@ -132,7 +140,8 @@ void UserApp::draw()
                 
                 // PRINT VALUES
                 //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
-                if (iter->mJointA == 0){
+                if (iter->mJointA == iter->mJointA){
+                
                 console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
                 }
                 
@@ -143,7 +152,12 @@ void UserApp::draw()
 			}
 			gl::end();
 		}
+        
+    
 	}
+    
+    //gl::color( Colorf::white() );
+   // gl::drawSolidCircle(Vec2f::zero(), 50.0f);
     mShapeDetection.draw();
 }
 
@@ -194,22 +208,38 @@ void UserApp::setup()
 {
     mShapeDetection = ShapeDetection();
     
-	mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_NECK ) );
-	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_LEFT_ELBOW ) );
-	mBones.push_back( Bone( nite::JOINT_LEFT_ELBOW,		nite::JOINT_LEFT_HAND ) );
-	mBones.push_back( Bone( nite::JOINT_RIGHT_SHOULDER, nite::JOINT_RIGHT_ELBOW ) );
-	mBones.push_back( Bone( nite::JOINT_RIGHT_ELBOW,	nite::JOINT_RIGHT_HAND ) );
-	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_RIGHT_SHOULDER ) );
-	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_TORSO ) );
-	mBones.push_back( Bone( nite::JOINT_RIGHT_SHOULDER, nite::JOINT_TORSO ) );
-	mBones.push_back( Bone( nite::JOINT_TORSO,			nite::JOINT_LEFT_HIP ) );
-	mBones.push_back( Bone( nite::JOINT_TORSO,			nite::JOINT_RIGHT_HIP ) );
-	mBones.push_back( Bone( nite::JOINT_LEFT_HIP,		nite::JOINT_RIGHT_HIP ) );
-	mBones.push_back( Bone( nite::JOINT_LEFT_HIP,		nite::JOINT_LEFT_KNEE ) );
-	mBones.push_back( Bone( nite::JOINT_LEFT_KNEE,		nite::JOINT_LEFT_FOOT ) );
-	mBones.push_back( Bone( nite::JOINT_RIGHT_HIP,		nite::JOINT_RIGHT_KNEE ) );
-	mBones.push_back( Bone( nite::JOINT_RIGHT_KNEE,		nite::JOINT_RIGHT_FOOT ) );
+//	mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_NECK ) );
+//	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_LEFT_ELBOW ) );
+//	mBones.push_back( Bone( nite::JOINT_LEFT_ELBOW,		nite::JOINT_LEFT_HAND ) );
+//	mBones.push_back( Bone( nite::JOINT_RIGHT_SHOULDER, nite::JOINT_RIGHT_ELBOW ) );
+//	mBones.push_back( Bone( nite::JOINT_RIGHT_ELBOW,	nite::JOINT_RIGHT_HAND ) );
+//	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_RIGHT_SHOULDER ) );
+//	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_TORSO ) );
+//	mBones.push_back( Bone( nite::JOINT_RIGHT_SHOULDER, nite::JOINT_TORSO ) );
+//	mBones.push_back( Bone( nite::JOINT_TORSO,			nite::JOINT_LEFT_HIP ) );
+//	mBones.push_back( Bone( nite::JOINT_TORSO,			nite::JOINT_RIGHT_HIP ) );
+//	mBones.push_back( Bone( nite::JOINT_LEFT_HIP,		nite::JOINT_RIGHT_HIP ) );
+//	mBones.push_back( Bone( nite::JOINT_LEFT_HIP,		nite::JOINT_LEFT_KNEE ) );
+//	mBones.push_back( Bone( nite::JOINT_LEFT_KNEE,		nite::JOINT_LEFT_FOOT ) );
+//	mBones.push_back( Bone( nite::JOINT_RIGHT_HIP,		nite::JOINT_RIGHT_KNEE ) );
+//	mBones.push_back( Bone( nite::JOINT_RIGHT_KNEE,		nite::JOINT_RIGHT_FOOT ) );
 
+    mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_HEAD ) );
+    mBones.push_back( Bone( nite::JOINT_NECK,			nite::JOINT_NECK ) );
+    mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_LEFT_SHOULDER ) );
+    mBones.push_back( Bone( nite::JOINT_LEFT_ELBOW,     nite::JOINT_LEFT_ELBOW ) );
+    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,		nite::JOINT_LEFT_HAND ) );
+    mBones.push_back( Bone( nite::JOINT_RIGHT_SHOULDER, nite::JOINT_RIGHT_SHOULDER ) );
+    mBones.push_back( Bone( nite::JOINT_RIGHT_ELBOW,    nite::JOINT_RIGHT_ELBOW ) );
+    mBones.push_back( Bone( nite::JOINT_RIGHT_HAND,     nite::JOINT_RIGHT_HAND ) );
+    mBones.push_back( Bone( nite::JOINT_TORSO,          nite::JOINT_TORSO ) );
+    mBones.push_back( Bone( nite::JOINT_LEFT_HIP,		nite::JOINT_LEFT_HIP ) );
+    mBones.push_back( Bone( nite::JOINT_LEFT_KNEE,		nite::JOINT_LEFT_KNEE ) );
+    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,		nite::JOINT_LEFT_FOOT ) );
+    mBones.push_back( Bone( nite::JOINT_RIGHT_HIP,		nite::JOINT_RIGHT_HIP ) );
+    mBones.push_back( Bone( nite::JOINT_RIGHT_KNEE,		nite::JOINT_RIGHT_KNEE ) );
+    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,		nite::JOINT_RIGHT_FOOT ) );
+    
 	mCamera = CameraPersp( getWindowWidth(), getWindowHeight(), 45.0f, 1.0f, 5000.0f );
 	mCamera.lookAt( Vec3f::zero(), Vec3f::zAxis(), Vec3f::yAxis() );
 
