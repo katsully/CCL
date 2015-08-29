@@ -44,6 +44,7 @@
 #include "cinder/gl/Texture.h"
 #include "Cinder-OpenNI.h"
 #include "ShapeDetection.h"
+#include "cinder/params/Params.h"
 
 /*
  * This application demonstrates how to display NiTE users.
@@ -72,6 +73,10 @@ private:
         nite::JointType			mJointA;
         nite::JointType			mJointB;
     };
+    
+    params::InterfaceGl mParams;
+    bool mUseBalance;
+    bool mShowNegativeSpace;
     
     ci::CameraPersp				mCamera;
     
@@ -166,52 +171,51 @@ void UserApp::draw()
             }
             gl::end();
             
-            
-            
-            
-            
-            
-            // DRAW DISTANCE LINES
-            gl::begin( GL_TRIANGLE_FAN );
-
-            gl::enableAlphaBlending();
-            gl::color( ColorA(1.0f, 0.25f, 1.0f, 0.3f) );
-            gl::lineWidth(5.0f);
-            
-//            gl::disableAlphaBlending();
-            
-            for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
+            if (mShowNegativeSpace) {
+                // DRAW DISTANCE LINES
+                gl::begin( GL_TRIANGLE_FAN );
+                
+                gl::enableAlphaBlending();
                 gl::color( ColorA(1.0f, 0.25f, 1.0f, 0.3f) );
-                const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
+                gl::lineWidth(5.0f);
                 
-                const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
+                //            gl::disableAlphaBlending();
                 
-                Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
-                Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
-                v0.x = -v0.x;
-                v1.x = -v1.x;
-                
-                // PRINT DISTANCES
-                //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
-                if (iter->mJointA == 15){
-                    // i wanna prrint the distance instead of X & Y
-//                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
-                   }
-                
-                gl::vertex( v0 );
-                gl::vertex( v1 );
+                for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
+                    gl::color( ColorA(1.0f, 0.25f, 1.0f, 0.3f) );
+                    const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
+                    
+                    const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
+                    
+                    Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
+                    Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
+                    v0.x = -v0.x;
+                    v1.x = -v1.x;
+                    
+                    // PRINT DISTANCES
+                    //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
+                    if (iter->mJointA == 15){
+                        // i wanna prrint the distance instead of X & Y
+                        //                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
+                    }
+                    
+                    gl::vertex( v0 );
+                    gl::vertex( v1 );
+                    
+                }
+                gl::disableAlphaBlending();
+                gl::end();
                 
             }
-            gl::disableAlphaBlending();
-            gl::end();
-            
         }
     }
 
-//    mShapeDetection.onBalance( mLeftKneeX, mRightKneeX, mTorso );
-
+    if ( mUseBalance ) {
+        mShapeDetection.onBalance( mLeftKneeX, mRightKneeX, mTorso );
+    }
     
     mShapeDetection.draw();
+    mParams.draw();
 }
 
 void UserApp::keyDown( KeyEvent event )
@@ -328,6 +332,11 @@ void UserApp::setup()
     mDevice->getUserTracker().setSkeletonSmoothingFactor( 0.5f );
     mDevice->connectUserEventHandler( &UserApp::onUser, this );
     mDevice->start();
+    
+    // params window
+    mParams = params::InterfaceGl( "Parameters", Vec2i( 200, 200 ) );
+    mParams.addParam( "On Balance", &mUseBalance );
+    mParams.addParam( "Negative Space", &mShowNegativeSpace );
 }
 
 CINDER_APP_BASIC( UserApp, RendererGl )
