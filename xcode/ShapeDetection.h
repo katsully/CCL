@@ -23,7 +23,7 @@ using namespace std;
 class ShapeDetection {
 public:
     ShapeDetection();
-    void draw();
+    void draw( bool useBalance, bool showNegativeSpace );
     void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions );
     void onBalance( int leftKneeX, int rightKneeX, cv::Point torso );
     

@@ -198,19 +198,26 @@ void ShapeDetection::onBalance(int leftKneeX, int rightKneeX, cv::Point torso ) 
     }
 }
 
-void ShapeDetection::draw()
+void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
 {
     gl::setMatricesWindow( getWindowSize() );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
-        if(mTrackedShapes[i].mOffBalance){
+        if( mTrackedShapes[i].mOffBalance && useBalance ){
             glBegin( GL_POLYGON );
+        } else if (showNegativeSpace) {
+            glBegin( GL_TRIANGLE_FAN );
         } else{
             glPointSize(2.0);
-            glBegin(GL_POLYGON);
+            glBegin(GL_POINTS);
         }
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
-            gl::color( Color( 0.0f, 0.0f, 0.0f ) );
+            if (showNegativeSpace) {
+                gl::color( Color( 0.0f, 0.0f, 0.0f ) );
+            } else {
+                gl::color(Color( 1.0f, 1.0f, 0.0f) );
+            }
+            
             Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
             // offset the points to align with the camera used for the mesh
 //            cout << getWindowWidth() << endl;
