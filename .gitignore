@@ -1,3 +1,10 @@
 .DS_Store
 build/
 xcode/build/UserApp.build/Debug/UserApp.build/dgph 
+*.pbxuser
+!default.pbxuser
+DerivedData
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+profile
