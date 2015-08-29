@@ -59,6 +59,9 @@ public:
 	void						setup();
     
     ShapeDetection    mShapeDetection;
+    float mRightKneeX;
+    float mLeftKneeX;
+    cv::Point mTorso;
 private:
 	struct Bone
 	{
@@ -127,8 +130,20 @@ void UserApp::draw()
             
 			for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
+                if (joint0.getType() == nite::JOINT_LEFT_KNEE) {
+                    mLeftKneeX = -joint0.getPosition().x;
+                } else if ( joint0.getType() == nite::JOINT_RIGHT_KNEE ) {
+                    mRightKneeX = -joint0.getPosition().x;
+                } else if ( joint0.getType() == nite::JOINT_TORSO ) {
+                    mTorso = cv::Point( -joint0.getPosition().x, joint0.getPosition().y );
+                }
 
 				const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
+//                if (joint1.getType() == nite::JOINT_LEFT_KNEE) {
+//                    mLeftKneeX = joint1.getPosition().x;
+//                } else if ( joint1.getType() == nite::JOINT_RIGHT_KNEE ) {
+//                    mRightKneeX = joint1.getPosition().x;
+//                }
 
 				Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
 				Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
@@ -138,7 +153,7 @@ void UserApp::draw()
                 // PRINT VALUES
                 //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
                 if (iter->mJointA == iter->mJointA){
-                console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
+//                console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
                 }
                 
 				gl::vertex( v0 );
@@ -149,6 +164,7 @@ void UserApp::draw()
 			gl::end();
 		}
 	}
+    mShapeDetection.onBalance( mLeftKneeX, mRightKneeX, mTorso );
     mShapeDetection.draw();
 }
 

@@ -18,6 +18,7 @@ public:
     float depth;
     cv::Point centroid; // center point of the shape
     Boolean matchFound;
+    bool mOffBalance;
     bool moving;
     int stillness;
     float motion;

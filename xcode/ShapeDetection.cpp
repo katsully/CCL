@@ -13,7 +13,7 @@ ShapeDetection::ShapeDetection()
     mThresh = 0.0;
     mMaxVal = 255.0;
     mNearLimit = 30;
-    mFarLimit = 4000;
+    mFarLimit = 10000;
 }
 
 void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions )
@@ -179,29 +179,53 @@ cv::Mat ShapeDetection::removeBlack( cv::Mat input, short nearLimit, short farLi
     return input;
 }
 
+void ShapeDetection::onBalance(int leftKneeX, int rightKneeX, cv::Point torso ) {
+    for ( Shape &shape : mTrackedShapes ) {
+        cv::Point distPoint = shape.centroid - torso;
+        float dist = cv::sqrt( distPoint.x * distPoint.x + distPoint.y * distPoint.y );
+        if ( dist > 150  && torso != cv::Point(0,0)) {
+            float bodyX = shape.centroid.x;
+//            cout << "body x " << bodyX << endl;
+//            cout << "right knee " << rightKneeX << endl;
+//            cout << "left knee " << leftKneeX << endl;
+//            cout << "torso " << torso << endl;
+            if ( ( bodyX < rightKneeX ) || ( bodyX > leftKneeX ) ) {
+                shape.mOffBalance = true;
+            } else {
+                shape.mOffBalance = false;
+            }
+        }
+    }
+}
+
 void ShapeDetection::draw()
 {
     gl::setMatricesWindow( getWindowSize() );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
-//        if(mDrawShapes){
-//            glBegin( GL_POLYGON );
-//        } else{
+        if(mTrackedShapes[i].mOffBalance){
+            glBegin( GL_POLYGON );
+        } else{
             glPointSize(2.0);
             glBegin(GL_POINTS);
-//        }
+        }
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
             gl::color( Color( 0.0f, 1.0f, 0.0f ) );
             Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
             // offset the points to align with the camera used for the mesh
-            cout << getWindowWidth() << endl;
-            cout << "x before: " << v.x << endl;
+//            cout << getWindowWidth() << endl;
+//            cout << "x before: " << v.x << endl;
             float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
-             cout << "x after: " << newX << endl;
+//             cout << "x after: " << newX << endl;
             float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
             Vec2f pos = Vec2f( newX, newY );
             gl::vertex( pos );
         }
         glEnd();
+//        if (mTrackedShapes[i].mOffBalance) {
+//            gl::color(1.0f, 0.0f, 1.0f);
+//            Vec2f center = Vec2f( mTrackedShapes[i].centroid.x, mTrackedShapes[i].centroid.y );
+//            gl::drawSolidCircle(center, 25.0f);
+//        }
     }
 }
