@@ -203,26 +203,14 @@ void ShapeDetection::draw()
     gl::setMatricesWindow( getWindowSize() );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
-
-        //        if(mDrawShapes){
-        //            glBegin( GL_POLYGON );
-        //        } else{
-        glPointSize(2.0f);
-        glBegin(GL_POINTS);
-        //gl::lineWidth(2.0f);
-        //glBegin(GL_LINE_LOOP);
-        
-//        }
-
-
         if(mTrackedShapes[i].mOffBalance){
             glBegin( GL_POLYGON );
         } else{
             glPointSize(2.0);
-            glBegin(GL_POINTS);
+            glBegin(GL_POLYGON);
         }
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
-            gl::color( Color( 1.0f, 1.0f, 0.0f ) );
+            gl::color( Color( 0.0f, 0.0f, 0.0f ) );
             Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
             // offset the points to align with the camera used for the mesh
 //            cout << getWindowWidth() << endl;
@@ -230,14 +218,10 @@ void ShapeDetection::draw()
             float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
 //             cout << "x after: " << newX << endl;
             float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
-            Vec2f pos = Vec2f( newX, newY );
+            Vec3f pos = Vec3f( newX, newY, -1.0f );
             gl::vertex( pos );
         }
         glEnd();
-//        if (mTrackedShapes[i].mOffBalance) {
-//            gl::color(1.0f, 0.0f, 1.0f);
-//            Vec2f center = Vec2f( mTrackedShapes[i].centroid.x, mTrackedShapes[i].centroid.y );
-//            gl::drawSolidCircle(center, 25.0f);
-//        }
+
     }
 }

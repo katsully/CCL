@@ -155,7 +155,7 @@ void UserApp::draw()
                 // PRINT VALUES
                 //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
                 if (iter->mJointA == iter->mJointA){
-                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
+//                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
 
                 }
                 
@@ -172,15 +172,16 @@ void UserApp::draw()
             
             
             // DRAW DISTANCE LINES
-            
+            gl::begin( GL_TRIANGLE_FAN );
+
             gl::enableAlphaBlending();
-            gl::color( ColorA(1.0f, 1.0f, 1.0f, 0.3f) );
+            gl::color( ColorA(1.0f, 0.25f, 1.0f, 0.3f) );
             gl::lineWidth(5.0f);
             
-            gl::begin( GL_LINES );
-            gl::disableAlphaBlending();
+//            gl::disableAlphaBlending();
             
             for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
+                gl::color( ColorA(1.0f, 0.25f, 1.0f, 0.3f) );
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
                 
                 const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
@@ -194,19 +195,20 @@ void UserApp::draw()
                 //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
                 if (iter->mJointA == 15){
                     // i wanna prrint the distance instead of X & Y
-                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
+//                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
                    }
                 
                 gl::vertex( v0 );
                 gl::vertex( v1 );
                 
             }
+            gl::disableAlphaBlending();
             gl::end();
             
         }
     }
 
-    mShapeDetection.onBalance( mLeftKneeX, mRightKneeX, mTorso );
+//    mShapeDetection.onBalance( mLeftKneeX, mRightKneeX, mTorso );
 
     
     mShapeDetection.draw();
@@ -297,12 +299,12 @@ void UserApp::setup()
     // DISTANCE LINES
     
     // hand to hand
-    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_RIGHT_HAND ) );
+//    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_RIGHT_HAND ) );
     //limbs to center
-    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_HAND,	nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,	nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_TORSO ) );
+   // mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_TORSO ) );
+   // mBones.push_back( Bone( nite::JOINT_RIGHT_HAND,	nite::JOINT_TORSO ) );
+//    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,	nite::JOINT_TORSO ) );
+//    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_TORSO ) );
     //surrounding body
     mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_LEFT_FOOT ) );
     mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,	nite::JOINT_LEFT_HAND ) );
