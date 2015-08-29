@@ -108,14 +108,21 @@ void UserApp::draw()
 	}
     
 	gl::setMatrices( mCamera );
+
+    
 	gl::color( Colorf( 1.0f, 0.0f, 0.0f ) );
 	for ( std::vector<nite::UserData>::const_iterator iter = mUsers.begin(); iter != mUsers.end(); ++iter )
     {
 		const nite::Skeleton& skeleton = iter->getSkeleton();
+        
 		if ( skeleton.getState() == nite::SKELETON_TRACKED ) {
-			gl::begin( GL_LINES );
+	       
+            gl::begin( GL_POINTS );
+            
+            
 			for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
+
 				const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
 
 				Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
@@ -123,8 +130,16 @@ void UserApp::draw()
 				v0.x = -v0.x;
 				v1.x = -v1.x;
                 
+                // PRINT VALUES
+                //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
+                if (iter->mJointA == 0){
+                console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
+                }
+                
 				gl::vertex( v0 );
 				gl::vertex( v1 );
+                
+                
 			}
 			gl::end();
 		}
