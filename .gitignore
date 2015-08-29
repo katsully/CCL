@@ -6,5 +6,5 @@ xcode/build/UserApp.build/Debug/UserApp.build/dgph
 DerivedData
 *.xcworkspace
 !default.xcworkspace
-xcuserdata
+*.xcuserdata
 profile
