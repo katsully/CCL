@@ -13,8 +13,8 @@
 		AE595CF917F399A900A882A2 /* UserApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE595CF817F399A900A882A2 /* UserApp.cpp */; };
 		AEAFFA2517F37D6C0033EE32 /* libNiTE2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAFFA1D17F37D6C0033EE32 /* libNiTE2.dylib */; };
 		AEAFFA2617F37D6C0033EE32 /* libOpenNI2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAFFA1E17F37D6C0033EE32 /* libOpenNI2.dylib */; };
-		AEAFFA2D17F37DB00033EE32 /* libNiTE2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AEAFFA1D17F37D6C0033EE32 /* libNiTE2.dylib */; };
-		AEAFFA2E17F37DB00033EE32 /* libOpenNI2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AEAFFA1E17F37D6C0033EE32 /* libOpenNI2.dylib */; };
+		AEAFFA2D17F37DB00033EE32 /* libNiTE2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AEAFFA1D17F37D6C0033EE32 /* libNiTE2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AEAFFA2E17F37DB00033EE32 /* libOpenNI2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AEAFFA1E17F37D6C0033EE32 /* libOpenNI2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AEAFFA2F17F37DB00033EE32 /* NiTE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = AEAFFA1F17F37D6C0033EE32 /* NiTE.ini */; };
 		AEAFFA3017F37DB00033EE32 /* NiTE2 in CopyFiles */ = {isa = PBXBuildFile; fileRef = AEAFFA2017F37D6C0033EE32 /* NiTE2 */; };
 		AEAFFA3117F37DB00033EE32 /* OpenNI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = AEAFFA2217F37D6C0033EE32 /* OpenNI.ini */; };
@@ -337,9 +337,9 @@
 		AEAFFA2317F37D6C0033EE32 /* OpenNI2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenNI2; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/lib/OpenNI2"; sourceTree = "<absolute>"; };
 		AEBB7EBA17BAC4DD00A2CC19 /* Cinder-OpenNI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "Cinder-OpenNI.cpp"; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/src/Cinder-OpenNI.cpp"; sourceTree = "<absolute>"; };
 		AEBB7EBB17BAC4DD00A2CC19 /* Cinder-OpenNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Cinder-OpenNI.h"; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/src/Cinder-OpenNI.h"; sourceTree = "<absolute>"; };
-		AEBB7F3B17BAEAFA00A2CC19 /* UserApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEBB7F3C17BAEAFA00A2CC19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "/Users/Kat/Cinder/blocks/Cinder-OpenNI/samples/UserApp/xcode/Info.plist"; sourceTree = "<absolute>"; };
-		E3FE71DEC3104A3AB8011460 /* UserApp_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserApp_Prefix.pch; sourceTree = "<group>"; };
+		AEBB7F3B17BAEAFA00A2CC19 /* CCL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCL.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEBB7F3C17BAEAFA00A2CC19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3FE71DEC3104A3AB8011460 /* CCL_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCL_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,7 +403,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AEBB7F3B17BAEAFA00A2CC19 /* UserApp.app */,
+				AEBB7F3B17BAEAFA00A2CC19 /* CCL.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -424,7 +424,7 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				E3FE71DEC3104A3AB8011460 /* UserApp_Prefix.pch */,
+				E3FE71DEC3104A3AB8011460 /* CCL_Prefix.pch */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -993,9 +993,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AEBB7F0617BAEAFA00A2CC19 /* UserApp */ = {
+		AEBB7F0617BAEAFA00A2CC19 /* CCL */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AEBB7F3817BAEAFA00A2CC19 /* Build configuration list for PBXNativeTarget "UserApp" */;
+			buildConfigurationList = AEBB7F3817BAEAFA00A2CC19 /* Build configuration list for PBXNativeTarget "CCL" */;
 			buildPhases = (
 				AEBB7F0717BAEAFA00A2CC19 /* Resources */,
 				AEBB7F1517BAEAFA00A2CC19 /* Sources */,
@@ -1007,10 +1007,10 @@
 			);
 			dependencies = (
 			);
-			name = UserApp;
+			name = CCL;
 			productInstallPath = "$(HOME)/Applications";
 			productName = BasicApp;
-			productReference = AEBB7F3B17BAEAFA00A2CC19 /* UserApp.app */;
+			productReference = AEBB7F3B17BAEAFA00A2CC19 /* CCL.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1019,9 +1019,9 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0610;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "UserApp" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CCL" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -1035,7 +1035,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AEBB7F0617BAEAFA00A2CC19 /* UserApp */,
+				AEBB7F0617BAEAFA00A2CC19 /* CCL */,
 			);
 		};
 /* End PBXProject section */
@@ -1093,7 +1093,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = UserApp_Prefix.pch;
+				GCC_PREFIX_HEADER = CCL_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
@@ -1113,7 +1113,7 @@
 					"\"$(CINDER_PATH)/blocks/OpenCV/lib/macosx/libopencv_core.a\"",
 					"\"$(CINDER_PATH)/blocks/OpenCV/lib/macosx/libopencv_imgproc.a\"",
 				);
-				PRODUCT_NAME = UserApp;
+				PRODUCT_NAME = CCL;
 				SYMROOT = ./build;
 				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/Cinder-OpenNI/src\" \"$(CINDER_PATH)/blocks/Cinder-OpenNI/src/OpenNI\" \"$(CINDER_PATH)/blocks/Cinder-OpenNI/src/NiTE\" \"$(CINDER_PATH)/blocks/opencv/include\"";
 				WRAPPER_EXTENSION = app;
@@ -1132,7 +1132,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = UserApp_Prefix.pch;
+				GCC_PREFIX_HEADER = CCL_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
@@ -1152,7 +1152,7 @@
 					"\"$(CINDER_PATH)/blocks/OpenCV/lib/macosx/libopencv_core.a\"",
 					"\"$(CINDER_PATH)/blocks/OpenCV/lib/macosx/libopencv_imgproc.a\"",
 				);
-				PRODUCT_NAME = UserApp;
+				PRODUCT_NAME = CCL;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
 				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/Cinder-OpenNI/src\" \"$(CINDER_PATH)/blocks/Cinder-OpenNI/src/OpenNI\" \"$(CINDER_PATH)/blocks/Cinder-OpenNI/src/NiTE\" \"$(CINDER_PATH)/blocks/opencv/include\"";
@@ -1164,7 +1164,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CINDER_PATH = ../../../../..;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1174,6 +1173,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = ../../../lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include ../../../src ../../../src/OpenNI ../../../src/NiTE";
@@ -1185,7 +1185,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CINDER_PATH = ../../../../..;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1205,7 +1204,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AEBB7F3817BAEAFA00A2CC19 /* Build configuration list for PBXNativeTarget "UserApp" */ = {
+		AEBB7F3817BAEAFA00A2CC19 /* Build configuration list for PBXNativeTarget "CCL" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AEBB7F3917BAEAFA00A2CC19 /* Debug */,
@@ -1214,7 +1213,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "UserApp" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CCL" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

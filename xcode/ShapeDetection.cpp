@@ -10,6 +10,10 @@
 
 ShapeDetection::ShapeDetection()
 {
+    mThresh = 0.0;
+    mMaxVal = 255.0;
+    mNearLimit = 30;
+    mFarLimit = 4000;
 }
 
 void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions )
@@ -65,7 +69,6 @@ void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceO
             mTrackedShapes[i].lastFrameSeen = ci::app::getElapsedFrames();
             mTrackedShapes[i].hull.clear();
             mTrackedShapes[i].hull = nearestShape->hull;
-            mTrackedShapes[i].moving = nearestShape->moving;
             mTrackedShapes[i].motion = nearestShape->motion;
         }
     }
@@ -76,7 +79,6 @@ void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceO
             // assign an unique ID
             mShapes[i].ID = shapeUID;
             mShapes[i].lastFrameSeen = ci::app::getElapsedFrames();
-            mShapes[i].moving = true;
             // add this new shape to tracked shapes
             mTrackedShapes.push_back( mShapes[i] );
             shapeUID++;
@@ -161,23 +163,6 @@ Shape* ShapeDetection::findNearestMatch( Shape trackedShape, vector< Shape > &sh
             finalDist = dist;
         }
     }
-    
-    // if a candidate was matched to the tracked shape
-    if(closestShape){
-        // if the shape isn't moving
-        if ( finalDist < 1.5 ) {
-            // 'dilute' motion
-            closestShape->motion = trackedShape.motion * .995;
-            // if diluted motion is under the threshold or it was already not moving, the object is not moving
-            if ( closestShape->motion < 1.5 || trackedShape.moving == false ) {
-                closestShape->moving = false;
-                closestShape->motion = 0;
-            }
-        } else if ( finalDist > 19 || trackedShape.moving == true ) {
-            closestShape->moving = true;
-            closestShape->motion = finalDist;
-        }
-    }
     return closestShape;
 }
 
@@ -196,21 +181,25 @@ cv::Mat ShapeDetection::removeBlack( cv::Mat input, short nearLimit, short farLi
 
 void ShapeDetection::draw()
 {
+    gl::setMatricesWindow( getWindowSize() );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
 //        if(mDrawShapes){
-            glBegin( GL_POLYGON );
+//            glBegin( GL_POLYGON );
 //        } else{
-//            glBegin(GL_POINTS);
+            glBegin(GL_POINTS);
 //        }
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
-            if(mTrackedShapes[i].moving){
-                gl::color( Color( 0.0f, 1.0f, 0.0f ) );
-                Vec2i v = fromOcv( mTrackedShapes[i].hull[j] );
-                // offset the points to align with the camera used for the mesh
-                Vec3f pos = Vec3f( v.x / 300.f - 0.55f, v.y / 250.f - 0.5f, -.1 );
-                gl::vertex( pos );
-            }
+            gl::color( Color( 0.0f, 1.0f, 0.0f ) );
+            Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
+            // offset the points to align with the camera used for the mesh
+            cout << getWindowWidth() << endl;
+            cout << "x before: " << v.x << endl;
+            float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
+             cout << "x after: " << newX << endl;
+            float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
+            Vec2f pos = Vec2f( newX, newY );
+            gl::vertex( pos );
         }
         glEnd();
     }

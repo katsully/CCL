@@ -93,9 +93,8 @@ using namespace std;
 
 void UserApp::draw()
 {
-    console() << "should be here" << endl;
 	gl::setViewport( getWindowBounds() );
-	gl::clear( Colorf::black() );
+	gl::clear( Color::black() );
 	gl::setMatricesWindow( getWindowSize() );
 
 	gl::color( Colorf::white() );
@@ -116,18 +115,14 @@ void UserApp::draw()
 		if ( skeleton.getState() == nite::SKELETON_TRACKED ) {
 			gl::begin( GL_LINES );
 			for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
-                console() << iter->mJointA << endl;
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
 				const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
-               // cout << joint0.getPosition() << endl;
 
 				Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
 				Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
 				v0.x = -v0.x;
 				v1.x = -v1.x;
-                console() << "HERE" << std::endl;
-                console() << v0.x << " " << v0.y << std::endl;
-
+                
 				gl::vertex( v0 );
 				gl::vertex( v1 );
 			}
@@ -184,7 +179,6 @@ void UserApp::screenShot()
 
 void UserApp::setup()
 {
-    cout << "BABABABABABBAB" << endl;
     mShapeDetection = ShapeDetection();
     
 	mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_NECK ) );
