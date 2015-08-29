@@ -184,14 +184,17 @@ void ShapeDetection::draw()
     gl::setMatricesWindow( getWindowSize() );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
-//        if(mDrawShapes){
-//            glBegin( GL_POLYGON );
-//        } else{
-            glPointSize(2.0);
-            glBegin(GL_POINTS);
+        //        if(mDrawShapes){
+        //            glBegin( GL_POLYGON );
+        //        } else{
+        glPointSize(2.0f);
+        glBegin(GL_POINTS);
+        //gl::lineWidth(2.0f);
+        //glBegin(GL_LINE_LOOP);
+        
 //        }
-        for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
-            gl::color( Color( 0.0f, 1.0f, 0.0f ) );
+        for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){ 
+            gl::color( Color( 1.0f, 1.0f, 0.0f ) );
             Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
             // offset the points to align with the camera used for the mesh
             cout << getWindowWidth() << endl;
