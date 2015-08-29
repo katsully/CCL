@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/smorad/CCL/xcode/CCL.xcodeproj">
+      location = "self:CCL.xcodeproj">
    </FileRef>
 </Workspace>

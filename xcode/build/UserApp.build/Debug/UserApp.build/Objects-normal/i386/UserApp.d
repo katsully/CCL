@@ -169,37 +169,4 @@ dependencies: /Users/smorad/CCL/src/UserApp.cpp \
   /Users/smorad/Cinder/blocks/Cinder-OpenNI/src/OpenNI/OpenNI.h \
   /Users/smorad/Cinder/blocks/Cinder-OpenNI/src/OpenNI/OniProperties.h \
   /Users/smorad/Cinder/blocks/Cinder-OpenNI/src/OpenNI/OniEnums.h \
-  /Users/smorad/Cinder/blocks/Cinder-OpenNI/src/NiTE/NiteEnums.h \
-  /Users/smorad/CCL/xcode/ShapeDetection.h \
-  /Users/smorad/Cinder/include/cinder/app/AppNative.h \
-  /Users/smorad/Cinder/blocks/OpenCV/include/CinderOpenCV.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/opencv.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/core/core_c.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/core/types_c.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/core/core.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/core/version.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/core/operations.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/core/mat.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/flann/miniflann.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/flann/defines.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/flann/config.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/imgproc/imgproc_c.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/imgproc/types_c.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/imgproc/imgproc.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/photo/photo.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/photo/photo_c.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/video/video.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/video/tracking.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/video/background_segm.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/features2d/features2d.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/objdetect/objdetect.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/calib3d/calib3d.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/ml/ml.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/highgui/highgui_c.h \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/highgui/highgui.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/contrib/contrib.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/contrib/retina.hpp \
-  /Users/smorad/Cinder/blocks/opencv/include/opencv2/contrib/openfabmap.hpp \
-  /Users/smorad/Cinder/include/cinder/Rand.h \
-  /Users/smorad/CCL/xcode/Shape.h \
-  /Users/smorad/Cinder/include/cinder/gl/Fbo.h
+  /Users/smorad/Cinder/blocks/Cinder-OpenNI/src/NiTE/NiteEnums.h

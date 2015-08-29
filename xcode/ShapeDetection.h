@@ -40,6 +40,10 @@ public:
     
     bool mDrawShapes;   // boolean for whether you draw shapes or points
     
+    gl::TextureRef mTexture;
+    gl::TextureRef mTextureDepth;
+
+    
   //  bool mCameraPresent;    // bool for whether camera was started without error
     
 private:
@@ -51,6 +55,7 @@ private:
     ci::Surface8u mSurface;
     ci::Surface8u mSurfaceDepth;
     ci::Surface8u mSurfaceSubtract;
+    ci::Surface8u mSurfaceBlur;
     
     typedef vector< vector<cv::Point > > ContourVector;
     ContourVector mContours;
