@@ -193,21 +193,15 @@ void UserApp::draw()
                 // PRINT DISTANCES
                 //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
                 if (iter->mJointA == 15){
+                    // i wanna prrint the distance instead of X & Y
                     console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
-                    console() << iter->mJointB << " X:" << v0.x << " Y:" << v0.y << endl;
-                    }
+                   }
                 
                 gl::vertex( v0 );
                 gl::vertex( v1 );
                 
             }
             gl::end();
-            
-            
-            
-            
-            
-            
             
         }
     }

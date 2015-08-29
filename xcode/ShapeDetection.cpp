@@ -222,7 +222,7 @@ void ShapeDetection::draw()
             glBegin(GL_POINTS);
         }
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
-
+            gl::color( Color( 1.0f, 1.0f, 0.0f ) );
             Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
             // offset the points to align with the camera used for the mesh
 //            cout << getWindowWidth() << endl;
