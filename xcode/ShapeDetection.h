@@ -25,6 +25,7 @@ public:
     ShapeDetection();
     void draw();
     void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions );
+    void onBalance( int leftKneeX, int rightKneeX, cv::Point torso );
     
     cv::Mat mInput;
     
@@ -56,7 +57,7 @@ private:
     ci::Surface8u mSurfaceDepth;
     ci::Surface8u mSurfaceSubtract;
     ci::Surface8u mSurfaceBlur;
-    
+        
     typedef vector< vector<cv::Point > > ContourVector;
     ContourVector mContours;
     ContourVector mApproxContours;
