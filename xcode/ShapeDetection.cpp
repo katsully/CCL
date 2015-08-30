@@ -107,6 +107,7 @@ vector< Shape > ShapeDetection::getEvaluationSet( ContourVector rawContours, int
         
         // extract data from contour
         cv::Scalar center = mean(matrix);
+//        cout << "center " << center << endl;
         double area = cv::contourArea(matrix);
         
         // reject it if too small
@@ -179,17 +180,21 @@ cv::Mat ShapeDetection::removeBlack( cv::Mat input, short nearLimit, short farLi
     return input;
 }
 
-void ShapeDetection::onBalance(int leftKneeX, int rightKneeX, cv::Point torso ) {
+void ShapeDetection::onBalance(nite::Point3f leftKnee, nite::Point3f rightKnee, nite::Point3f torso ) {
     for ( Shape &shape : mTrackedShapes ) {
-        cv::Point distPoint = shape.centroid - torso;
+        // make sure the shape is the one affliated with the skeleton
+        cv::Point torsoCVPoint = cv::Point( -torso.x, torso.y );
+        cv::Point distPoint = shape.centroid - torsoCVPoint;
         float dist = cv::sqrt( distPoint.x * distPoint.x + distPoint.y * distPoint.y );
-        if ( dist > 150  && torso != cv::Point(0,0)) {
+        if ( dist > 150  && torso != nite::Point3f(0,0,0)) {
             float bodyX = shape.centroid.x;
 //            cout << "body x " << bodyX << endl;
-//            cout << "right knee " << rightKneeX << endl;
-//            cout << "left knee " << leftKneeX << endl;
-//            cout << "torso " << torso << endl;
-            if ( ( torso.x < rightKneeX ) || ( torso.x > leftKneeX ) ) {
+//            cout << "right knee " << -rightKnee.x << endl;
+//            cout << "left knee " << -leftKnee.x << endl;
+//            cout << "torso " << -torso.x << endl;
+            if ( ( bodyX < -rightKnee.x ) || ( bodyX > -leftKnee.x ) ) {
+                shape.mOffBalance = true;
+            } else if ( abs( torso.z - rightKnee.z ) > 100 || abs( torso.z - leftKnee.z ) > 100) {
                 shape.mOffBalance = true;
             } else {
                 shape.mOffBalance = false;
@@ -220,15 +225,11 @@ void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
             
             Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
             // offset the points to align with the camera used for the mesh
-//            cout << getWindowWidth() << endl;
-//            cout << "x before: " << v.x << endl;
             float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
-//             cout << "x after: " << newX << endl;
             float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
             Vec2f pos = Vec2f( newX, newY);
             gl::vertex( pos );
         }
         glEnd();
-
     }
 }

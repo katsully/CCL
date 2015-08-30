@@ -25,7 +25,7 @@ public:
     ShapeDetection();
     void draw( bool useBalance, bool showNegativeSpace );
     void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions );
-    void onBalance( int leftKneeX, int rightKneeX, cv::Point torso );
+    void onBalance( nite::Point3f leftKnee, nite::Point3f rightKnee, nite::Point3f torso );
     
     cv::Mat mInput;
     
