@@ -1106,7 +1106,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path";
 				LIBRARY_SEARCH_PATHS = (
-					/Users/Kat/Cinder/blocks/OpenCV/lib/ios,
+					/Users/smorad/Cinder/blocks/OpenCV/lib/ios,
 					/Users/Kat/Cinder/blocks/OpenCV/lib/macosx,
 					/Users/Kat/Cinder/blocks/OpenCV/lib/vc2012/x86,
 					/Users/Kat/Cinder/blocks/OpenCV/lib/vc2013/x86,
@@ -1145,7 +1145,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path";
 				LIBRARY_SEARCH_PATHS = (
-					/Users/Kat/Cinder/blocks/OpenCV/lib/ios,
+					/Users/smorad/Cinder/blocks/OpenCV/lib/ios,
 					/Users/Kat/Cinder/blocks/OpenCV/lib/macosx,
 					/Users/Kat/Cinder/blocks/OpenCV/lib/vc2012/x86,
 					/Users/Kat/Cinder/blocks/OpenCV/lib/vc2013/x86,
