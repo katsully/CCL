@@ -60,9 +60,9 @@ public:
     void						setup();
     
     ShapeDetection    mShapeDetection;
-    float mRightKneeX;
-    float mLeftKneeX;
-    cv::Point mTorso;
+    nite::Point3f mRightKnee;
+    nite::Point3f mLeftKnee;
+    nite::Point3f mTorso;
 private:
     struct Bone
     {
@@ -137,11 +137,11 @@ void UserApp::draw()
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
                 
                 if (joint0.getType() == nite::JOINT_LEFT_KNEE) {
-                    mLeftKneeX = -(joint0.getPosition().x);
+                    mLeftKnee = joint0.getPosition();
                 } else if ( joint0.getType() == nite::JOINT_RIGHT_KNEE ) {
-                    mRightKneeX = -(joint0.getPosition().x);
+                    mRightKnee = joint0.getPosition();
                 } else if ( joint0.getType() == nite::JOINT_TORSO ) {
-                    mTorso = cv::Point( -(joint0.getPosition().x), joint0.getPosition().y );
+                    mTorso = joint0.getPosition();
                 }
                 
                 const nite::SkeletonJoint& joint1 = skeleton.getJoint( mBones[i].mJointB );
@@ -242,7 +242,7 @@ void UserApp::draw()
     
     // show if dancer is on or off balance
     if ( mUseBalance ) {
-        mShapeDetection.onBalance( mLeftKneeX, mRightKneeX, mTorso );
+        mShapeDetection.onBalance( mLeftKnee, mRightKnee, mTorso );
     }
     
     // draw contour points
