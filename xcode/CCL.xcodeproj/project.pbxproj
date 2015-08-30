@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25EBC67B1B90BF260066DB24 /* joints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EBC6791B90BF260066DB24 /* joints.cpp */; };
 		462DA6221B90BEE600A41D68 /* ShapeDetection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462DA6201B90BEE600A41D68 /* ShapeDetection.cpp */; };
 		462DA6251B90C12F00A41D68 /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462DA6231B90C12F00A41D68 /* Shape.cpp */; };
 		462DA98D1B90CAC500A41D68 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 462DA98C1B90CAC500A41D68 /* libz.dylib */; };
+		468DFB001B93C31C003C5C31 /* TrailPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468DFAFE1B93C31C003C5C31 /* TrailPoint.cpp */; };
 		AE595CF917F399A900A882A2 /* UserApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE595CF817F399A900A882A2 /* UserApp.cpp */; };
 		AEAFFA2517F37D6C0033EE32 /* libNiTE2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAFFA1D17F37D6C0033EE32 /* libNiTE2.dylib */; };
 		AEAFFA2617F37D6C0033EE32 /* libOpenNI2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAFFA1E17F37D6C0033EE32 /* libOpenNI2.dylib */; };
@@ -57,8 +57,6 @@
 		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		25EBC6791B90BF260066DB24 /* joints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = joints.cpp; sourceTree = "<group>"; };
-		25EBC67A1B90BF260066DB24 /* joints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joints.h; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		462DA6201B90BEE600A41D68 /* ShapeDetection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShapeDetection.cpp; sourceTree = "<group>"; };
@@ -328,6 +326,8 @@
 		462DA7681B90C21100A41D68 /* opencv_videostab249.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = opencv_videostab249.lib; sourceTree = "<group>"; };
 		462DA7691B90C21100A41D68 /* opencv_videostab249d.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = opencv_videostab249d.lib; sourceTree = "<group>"; };
 		462DA98C1B90CAC500A41D68 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		468DFAFE1B93C31C003C5C31 /* TrailPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrailPoint.cpp; sourceTree = "<group>"; };
+		468DFAFF1B93C31C003C5C31 /* TrailPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailPoint.h; sourceTree = "<group>"; };
 		4B9EA6670FB94B019CB80224 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
@@ -370,9 +370,9 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				468DFAFE1B93C31C003C5C31 /* TrailPoint.cpp */,
+				468DFAFF1B93C31C003C5C31 /* TrailPoint.h */,
 				AE595CF817F399A900A882A2 /* UserApp.cpp */,
-				25EBC6791B90BF260066DB24 /* joints.cpp */,
-				25EBC67A1B90BF260066DB24 /* joints.h */,
 				462DA6201B90BEE600A41D68 /* ShapeDetection.cpp */,
 				462DA6211B90BEE600A41D68 /* ShapeDetection.h */,
 				462DA6231B90C12F00A41D68 /* Shape.cpp */,
@@ -1077,8 +1077,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				468DFB001B93C31C003C5C31 /* TrailPoint.cpp in Sources */,
 				AE595CF917F399A900A882A2 /* UserApp.cpp in Sources */,
-				25EBC67B1B90BF260066DB24 /* joints.cpp in Sources */,
 				462DA6221B90BEE600A41D68 /* ShapeDetection.cpp in Sources */,
 				AEBB7F1717BAEAFA00A2CC19 /* Cinder-OpenNI.cpp in Sources */,
 				462DA6251B90C12F00A41D68 /* Shape.cpp in Sources */,
