@@ -22,7 +22,9 @@ public:
     float mMaxSpeed;
     float mMaxForce;
     
+    std::list<Vec2f> mTrail;
+    
     void arrive( Vec2f centroidLocation );
     void applyForce (Vec2f force );
-    void updateTrail( list<Vec2f>& trailPoints );
+    void updateTrail();
 };

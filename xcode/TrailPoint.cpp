@@ -44,7 +44,7 @@ void TrailPoint::applyForce( Vec2f force )
     mAcceleration += force;
 }
 
-void TrailPoint::updateTrail( list<Vec2f>& trailPoints ) {
+void TrailPoint::updateTrail() {
     
     // Update velocity
     mVelocity += mAcceleration;
@@ -54,8 +54,8 @@ void TrailPoint::updateTrail( list<Vec2f>& trailPoints ) {
     // Reset acceleration to 0 each cycle
     mAcceleration = Vec2f::zero();
     
-    trailPoints.push_back(mLocation);
-    if ( trailPoints.size() > 50 ) {
-        trailPoints.pop_front();
+    mTrail.push_back(mLocation);
+    if ( mTrail.size() > 50 ) {
+        mTrail.pop_front();
     }
 }

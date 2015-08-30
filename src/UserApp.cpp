@@ -240,7 +240,7 @@ void UserApp::draw()
     }
     gl::setMatrices( mCamera );
     glBegin( GL_LINE_STRIP );
-    glLineWidth(20.0f);
+    glLineWidth(35.0f);
     gl::color( Color( 1.0f, 0.08f, 0.58f) );
     for( Vec3f v: mJointTrail ) {
         gl::vertex( v );

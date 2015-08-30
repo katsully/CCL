@@ -72,7 +72,7 @@ void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceO
             mTrackedShapes[i].motion = nearestShape->motion;
             Vec2f centerVec = Vec2f( mTrackedShapes[i].centroid.x, mTrackedShapes[i].centroid.y );
             mTrackedShapes[i].mTrailPoint.arrive(centerVec);
-            mTrackedShapes[i].mTrailPoint.updateTrail( mTrackedShapes[i].mCenterTrail );
+            mTrackedShapes[i].mTrailPoint.updateTrail();
         }
     }
     
@@ -238,9 +238,9 @@ void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
         glEnd();
         
         glBegin( GL_LINE_STRIP );
-        glLineWidth(20.0f);
+        glLineWidth(35.0f);
         gl::color( Color( 0.0f, 0.75f, 1.0f) );
-        for( Vec2f v: mTrackedShapes[i].mCenterTrail ) {
+        for( Vec2f v: mTrackedShapes[i].mTrailPoint.mTrail ) {
             float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
             float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
             gl::vertex( newX, newY );
