@@ -62,6 +62,7 @@ private:
     typedef vector< vector<cv::Point > > ContourVector;
     ContourVector mContours;
     ContourVector mApproxContours;
+//    vector<vector<Vec2f>> mCenterTrail;
     int shapeUID;
     
     cv::vector<cv::Vec4i> mHierarchy;

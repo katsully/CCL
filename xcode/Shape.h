@@ -9,6 +9,10 @@
 #pragma once
 #include "CinderOpenCV.h"
 
+using namespace ci;
+using namespace ci::app;
+using namespace std;
+
 class Shape {
 public:
     Shape();
@@ -23,5 +27,7 @@ public:
     int stillness;
     float motion;
     cv::vector<cv::Point> hull; // stores point representing the hull of the shape
+    Vec2f pos;
+    std::list<Vec2f> mCenterTrail;
     int lastFrameSeen;  // mark the last frame where the blob was seen, used to track when shapes leave the frame
 };
