@@ -44,6 +44,7 @@
 #include "cinder/gl/Texture.h"
 #include "Cinder-OpenNI.h"
 #include "ShapeDetection.h"
+#include "cinder/params/Params.h"
 
 /*
  * This application demonstrates how to display NiTE users.
@@ -73,6 +74,11 @@ private:
         nite::JointType			mJointB;
     };
     
+    // used for the GUI params
+    params::InterfaceGl mParams;
+    bool mUseBalance;
+    bool mShowNegativeSpace;
+    
     ci::CameraPersp				mCamera;
     
     std::vector<Bone>			mBones;
@@ -82,7 +88,6 @@ private:
     ci::gl::TextureRef			mTexture;
     std::vector<nite::UserData>	mUsers;
     void						onUser( nite::UserTrackerFrameRef, const OpenNI::DeviceOptions& deviceOptions );
-    void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions );
     
     void						screenShot();
 };
@@ -128,8 +133,9 @@ void UserApp::draw()
             
             gl::begin( GL_POINTS );
             
-            for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
-                const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
+            // this draws the first 15 points (so no joints get drawn twice)
+            for ( int i=0; i<15; i++ ) {
+                const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
 
                 if (joint0.getType() == nite::JOINT_LEFT_KNEE) {
                     mLeftKneeX = -joint0.getPosition().x;
@@ -139,83 +145,73 @@ void UserApp::draw()
                     mTorso = cv::Point( -joint0.getPosition().x, joint0.getPosition().y );
                 }
 
-				const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
-//                if (joint1.getType() == nite::JOINT_LEFT_KNEE) {
-//                    mLeftKneeX = joint1.getPosition().x;
-//                } else if ( joint1.getType() == nite::JOINT_RIGHT_KNEE ) {
-//                    mRightKneeX = joint1.getPosition().x;
-//                }
+				const nite::SkeletonJoint& joint1 = skeleton.getJoint( mBones[i].mJointB );
 
 				Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
 				Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
 				v0.x = -v0.x;
 				v1.x = -v1.x;
-
                 
                 // PRINT VALUES
-                //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
-                if (iter->mJointA == iter->mJointA){
-                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
-
+                if (mBones[i].mJointA == mBones[i].mJointA){
+//                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
                 }
                 
                 gl::vertex( v0 );
                 gl::vertex( v1 );
-                
-                
             }
             gl::end();
             
-            
-            
-            
-            
-            
-            // DRAW DISTANCE LINES
-            
-            gl::enableAlphaBlending();
-            gl::color( ColorA(1.0f, 1.0f, 1.0f, 0.3f) );
-            gl::lineWidth(5.0f);
-            
-            gl::begin( GL_LINES );
-            gl::disableAlphaBlending();
-            
-            for ( vector<Bone>::const_iterator iter = mBones.begin(); iter != mBones.end(); ++iter ) {
-                const nite::SkeletonJoint& joint0 = skeleton.getJoint( iter->mJointA );
+            // draw negative space around the dancer
+            if (mShowNegativeSpace) {
+                // DRAW DISTANCE LINES
+                gl::begin( GL_TRIANGLE_FAN );
                 
-                const nite::SkeletonJoint& joint1 = skeleton.getJoint( iter->mJointB );
+                gl::enableAlphaBlending();
+                gl::color( ColorA(1.0f, 0.25f, 1.0f, 0.3f) );
+                gl::lineWidth(5.0f);
                 
-                Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
-                Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
-                v0.x = -v0.x;
-                v1.x = -v1.x;
-                
-                // PRINT DISTANCES
-                //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
-                if (iter->mJointA == 15){
-                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
-                    console() << iter->mJointB << " X:" << v0.x << " Y:" << v0.y << endl;
-                    }
-                
-                gl::vertex( v0 );
-                gl::vertex( v1 );
-                
+                //  this draws the distance lines (and not the inidivual joints)
+                for ( int i = 15; i < mBones.size(); i++ ) {
+                    gl::color( ColorA(1.0f, 0.25f, 1.0f, 0.3f) );
+                    const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
+                    const nite::SkeletonJoint& joint1 = skeleton.getJoint( mBones[i].mJointB );
+                    
+                    Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
+                    Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
+                    v0.x = -v0.x;
+                    v1.x = -v1.x;
+                    
+                    // PRINT DISTANCES
+                    //  console() << iter->mJointA << " X: " << v0.x << " Y: " << v0.y << endl;
+//                    if (mBones[i].mJointA == 15){
+                        // i wanna prrint the distance instead of X & Y
+                        //                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
+//                    }
+                    Vec3f distPoint = v0 - v1;
+                    float dist = sqrt( distPoint.x * distPoint.x + distPoint.y * distPoint.y );
+                    cout << "the distance between " << mBones[i].mJointA << " and " << mBones[i].mJointB << " is " << dist << endl;
+                    
+                    gl::vertex( v0 );
+                    gl::vertex( v1 );
+                    
+                }
+                gl::disableAlphaBlending();
+                gl::end();
             }
-            gl::end();
-            
-            
-            
-            
-            
-            
-            
         }
     }
 
-    mShapeDetection.onBalance( mLeftKneeX, mRightKneeX, mTorso );
-
+    // show if dancer is on or off balance
+    if ( mUseBalance ) {
+        mShapeDetection.onBalance( mLeftKneeX, mRightKneeX, mTorso );
+    }
     
-    mShapeDetection.draw();
+    // draw contour points
+    mShapeDetection.draw( mUseBalance, mShowNegativeSpace );
+    
+    // draw gui params
+    mParams.draw();
 }
 
 void UserApp::keyDown( KeyEvent event )
@@ -246,11 +242,6 @@ void UserApp::onUser( nite::UserTrackerFrameRef frame, const OpenNI::DeviceOptio
         }
     }
 }
-
-void onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceOptions& deviceOptions )
-{
-}
-
 
 void UserApp::prepareSettings( Settings* settings )
 {
@@ -303,12 +294,12 @@ void UserApp::setup()
     // DISTANCE LINES
     
     // hand to hand
-    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_RIGHT_HAND ) );
+//    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_RIGHT_HAND ) );
     //limbs to center
-    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_HAND,	nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,	nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_TORSO ) );
+   // mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_TORSO ) );
+   // mBones.push_back( Bone( nite::JOINT_RIGHT_HAND,	nite::JOINT_TORSO ) );
+//    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,	nite::JOINT_TORSO ) );
+//    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_TORSO ) );
     //surrounding body
     mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_LEFT_FOOT ) );
     mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,	nite::JOINT_LEFT_HAND ) );
@@ -332,6 +323,11 @@ void UserApp::setup()
     mDevice->getUserTracker().setSkeletonSmoothingFactor( 0.5f );
     mDevice->connectUserEventHandler( &UserApp::onUser, this );
     mDevice->start();
+    
+    // params window
+    mParams = params::InterfaceGl( "Parameters", Vec2i( 200, 200 ) );
+    mParams.addParam( "On Balance", &mUseBalance );
+    mParams.addParam( "Negative Space", &mShowNegativeSpace );
 }
 
 CINDER_APP_BASIC( UserApp, RendererGl )

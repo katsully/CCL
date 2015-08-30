@@ -64,7 +64,7 @@ void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceO
             mTrackedShapes[i].centroid = nearestShape->centroid;
             // get depth value from center point
             float centerDepth = (float)mInput.at<short>( mTrackedShapes[i].centroid.y, mTrackedShapes[i].centroid.x );
-            // map 10 4000 to 0 1
+            // map 10 10000 to 0 1
             mTrackedShapes[i].depth = lmap( centerDepth, (float)mNearLimit, (float)mFarLimit, 0.0f, 1.0f );
             mTrackedShapes[i].lastFrameSeen = ci::app::getElapsedFrames();
             mTrackedShapes[i].hull.clear();
@@ -126,7 +126,7 @@ vector< Shape > ShapeDetection::getEvaluationSet( ContourVector rawContours, int
         
         // get depth value from center point
         float centerDepth = (float)mInput.at<short>( shape.centroid.y, shape.centroid.x );
-        // map 10 4000 to 0 1
+        // map 10000 to 0 1
         shape.depth = lmap( centerDepth, (float)mNearLimit, (float)mFarLimit, 0.0f, 1.0f );
         
         // store points around shape
@@ -198,31 +198,26 @@ void ShapeDetection::onBalance(int leftKneeX, int rightKneeX, cv::Point torso ) 
     }
 }
 
-void ShapeDetection::draw()
+void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
 {
     gl::setMatricesWindow( getWindowSize() );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
-
-        //        if(mDrawShapes){
-        //            glBegin( GL_POLYGON );
-        //        } else{
-        glPointSize(2.0f);
-        glBegin(GL_POINTS);
-        //gl::lineWidth(2.0f);
-        //glBegin(GL_LINE_LOOP);
-        
-//        }
-
-
-        if(mTrackedShapes[i].mOffBalance){
+        if( mTrackedShapes[i].mOffBalance && useBalance ){
             glBegin( GL_POLYGON );
+        } else if (showNegativeSpace) {
+            glBegin( GL_TRIANGLE_FAN );
         } else{
             glPointSize(2.0);
             glBegin(GL_POINTS);
         }
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
-
+            if (showNegativeSpace) {
+                gl::color( Color( 0.0f, 0.0f, 0.0f ) );
+            } else {
+                gl::color(Color( 1.0f, 1.0f, 0.0f) );
+            }
+            
             Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
             // offset the points to align with the camera used for the mesh
 //            cout << getWindowWidth() << endl;
@@ -230,14 +225,10 @@ void ShapeDetection::draw()
             float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
 //             cout << "x after: " << newX << endl;
             float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
-            Vec2f pos = Vec2f( newX, newY );
+            Vec3f pos = Vec3f( newX, newY, -1.0f );
             gl::vertex( pos );
         }
         glEnd();
-//        if (mTrackedShapes[i].mOffBalance) {
-//            gl::color(1.0f, 0.0f, 1.0f);
-//            Vec2f center = Vec2f( mTrackedShapes[i].centroid.x, mTrackedShapes[i].centroid.y );
-//            gl::drawSolidCircle(center, 25.0f);
-//        }
+
     }
 }
