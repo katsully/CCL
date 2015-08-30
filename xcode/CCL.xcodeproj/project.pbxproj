@@ -1091,7 +1091,7 @@
 		AEBB7F3917BAEAFA00A2CC19 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = /Users/smorad/Cinder;
+				CINDER_PATH = /Users/Kat/Cinder;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1106,10 +1106,10 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path";
 				LIBRARY_SEARCH_PATHS = (
-					/Users/smorad/Cinder/blocks/OpenCV/lib/ios,
-					/Users/Kat/Cinder/blocks/OpenCV/lib/macosx,
-					/Users/Kat/Cinder/blocks/OpenCV/lib/vc2012/x86,
-					/Users/Kat/Cinder/blocks/OpenCV/lib/vc2013/x86,
+					"\"$(CINDER_PATH)/blocks/OpenCV/lib/ios\"",
+					"\"$(CINDER_PATH)/blocks/OpenCV/lib/macosx\"",
+					"\"$(CINDER_PATH)/blocks/OpenCV/lib/vc2012/x86\"",
+					"\"$(CINDER_PATH)/blocks/OpenCV/lib/vc2013/x86\"",
 					"\"$(CINDER_PATH)/blocks/Cinder-OpenNI/lib\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1129,7 +1129,7 @@
 		AEBB7F3A17BAEAFA00A2CC19 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = /Users/smorad/Cinder;
+				CINDER_PATH = /Users/Kat/Cinder;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1145,10 +1145,10 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path";
 				LIBRARY_SEARCH_PATHS = (
-					/Users/smorad/Cinder/blocks/OpenCV/lib/ios,
-					/Users/Kat/Cinder/blocks/OpenCV/lib/macosx,
-					/Users/Kat/Cinder/blocks/OpenCV/lib/vc2012/x86,
-					/Users/Kat/Cinder/blocks/OpenCV/lib/vc2013/x86,
+					"\"$(CINDER_PATH)/blocks/OpenCV/lib/ios\"",
+					"\"$(CINDER_PATH)/blocks/OpenCV/lib/macosx\"",
+					"\"$(CINDER_PATH)/blocks/OpenCV/lib/vc2012/x86\"",
+					"\"$(CINDER_PATH)/blocks/OpenCV/lib/vc2013/x86\"",
 					"\"$(CINDER_PATH)/blocks/Cinder-OpenNI/lib\"",
 				);
 				OTHER_LDFLAGS = (

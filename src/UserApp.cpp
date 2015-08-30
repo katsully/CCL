@@ -63,6 +63,7 @@ public:
     nite::Point3f mRightKnee;
     nite::Point3f mLeftKnee;
     nite::Point3f mTorso;
+    
 private:
     struct Bone
     {
@@ -76,9 +77,11 @@ private:
     
     // used for the GUI params
     params::InterfaceGl mParams;
-    bool mUseBalance=false;
-    bool mShowNegativeSpace=false;
-    bool mShowDistanceLines=false;
+    bool mUseBalance = false;
+    bool mShowNegativeSpace = false;
+    bool mShowDistanceLines = false;
+    int mJointParam = 0;
+    std::list<Vec3f> mJointTrail;
     
     ci::CameraPersp				mCamera;
     
@@ -135,6 +138,14 @@ void UserApp::draw()
                 gl::begin( GL_POINTS );
                 
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
+                if ( mJointParam == mBones[i].mJointA ) {
+                    Vec3f trailPoint = OpenNI::toVec3f(joint0.getPosition() );
+                    trailPoint.x = -trailPoint.x;
+                    mJointTrail.push_back(trailPoint);
+                    if ( mJointTrail.size() > 200 ) {
+                        mJointTrail.pop_front();
+                    }
+                }
                 
                 if (joint0.getType() == nite::JOINT_LEFT_KNEE) {
                     mLeftKnee = joint0.getPosition();
@@ -150,11 +161,6 @@ void UserApp::draw()
                 //				Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
                 v0.x = -v0.x;
                 //				v1.x = -v1.x;
-                
-                // PRINT VALUES
-                //                if (mBones[i].mJointA == mBones[i].mJointA){
-                //                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
-                //                }
                 
                 gl::vertex( v0 );
                 // gl::vertex( v1 );
@@ -227,18 +233,19 @@ void UserApp::draw()
                 
                 gl::vertex( v0 );
                 gl::vertex( v1 );
-                
-                
-                
             }
                 gl::end();
             }
-            
-            
-            
-            
         }
     }
+    gl::setMatrices( mCamera );
+    glBegin( GL_LINE_STRIP );
+    glLineWidth(20.0f);
+    gl::color( Color( 1.0f, 0.08f, 0.58f) );
+    for( Vec3f v: mJointTrail ) {
+        gl::vertex( v );
+    }
+    glEnd();
     
     // show if dancer is on or off balance
     if ( mUseBalance ) {
@@ -295,6 +302,9 @@ void UserApp::screenShot()
 void UserApp::setup()
 {
     mShapeDetection = ShapeDetection();
+    
+    // create vector of joint names
+    vector<string> joints = { "Head", "Neck", "Left Shoulder", "Right Shoulder", "Left Elbow", "Right Elbow", "Left Hand", "Right Hand", "Torso", "Left Hip", "Right Hip", "Left Knee", "Right Knee", "Left Foot", "Right Foot" };
     
     //	mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_NECK ) );
     //	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_LEFT_ELBOW ) );
@@ -354,7 +364,7 @@ void UserApp::setup()
     try {
         mDevice = mDeviceManager->createDevice( OpenNI::DeviceOptions().enableUserTracking() );
     } catch ( OpenNI::ExcDeviceNotAvailable ex ) {
-        console() << "exception with openni" << ex.what() << endl;
+        console() << "exception with openni: " << ex.what() << endl;
         quit();
         return;
     }
@@ -368,6 +378,7 @@ void UserApp::setup()
     mParams.addParam( "On Balance", &mUseBalance );
     mParams.addParam( "Negative Space", &mShowNegativeSpace );
     mParams.addParam( "Distance Lines", &mShowDistanceLines );
+    mParams.addParam( "Follow joints", joints, &mJointParam );
 }
 
 CINDER_APP_BASIC( UserApp, RendererGl )
