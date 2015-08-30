@@ -43,6 +43,7 @@ public:
     
     gl::TextureRef mTexture;
     gl::TextureRef mTextureDepth;
+    ci::Surface8u mSurfaceSubtract;
 
     
   //  bool mCameraPresent;    // bool for whether camera was started without error
@@ -55,7 +56,7 @@ private:
     
     ci::Surface8u mSurface;
     ci::Surface8u mSurfaceDepth;
-    ci::Surface8u mSurfaceSubtract;
+
     ci::Surface8u mSurfaceBlur;
         
     typedef vector< vector<cv::Point > > ContourVector;

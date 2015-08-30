@@ -189,7 +189,7 @@ void ShapeDetection::onBalance(int leftKneeX, int rightKneeX, cv::Point torso ) 
 //            cout << "right knee " << rightKneeX << endl;
 //            cout << "left knee " << leftKneeX << endl;
 //            cout << "torso " << torso << endl;
-            if ( ( bodyX < rightKneeX ) || ( bodyX > leftKneeX ) ) {
+            if ( ( torso.x < rightKneeX ) || ( torso.x > leftKneeX ) ) {
                 shape.mOffBalance = true;
             } else {
                 shape.mOffBalance = false;
@@ -225,7 +225,7 @@ void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
             float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
 //             cout << "x after: " << newX << endl;
             float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
-            Vec3f pos = Vec3f( newX, newY, -1.0f );
+            Vec2f pos = Vec2f( newX, newY);
             gl::vertex( pos );
         }
         glEnd();

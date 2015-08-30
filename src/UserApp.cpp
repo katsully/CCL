@@ -106,11 +106,11 @@ void UserApp::draw()
     gl::setMatricesWindow( getWindowSize() );
     
     gl::color( Colorf::white() );
-    if ( mChannel ) {
+    if ( mShapeDetection.mSurfaceSubtract ) {
         if ( mTexture ) {
-            mTexture->update( Channel32f( mChannel ) );
+            mTexture->update( Channel32f( mShapeDetection.mSurfaceSubtract ) );
         } else {
-            mTexture = gl::Texture::create( Channel32f( mChannel ) );
+            mTexture = gl::Texture::create( Channel32f( mShapeDetection.mSurfaceSubtract ) );
         }
         gl::draw( mTexture, mTexture->getBounds(), getWindowBounds() );
     }
@@ -138,27 +138,27 @@ void UserApp::draw()
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
 
                 if (joint0.getType() == nite::JOINT_LEFT_KNEE) {
-                    mLeftKneeX = -joint0.getPosition().x;
+                    mLeftKneeX = -(joint0.getPosition().x);
                 } else if ( joint0.getType() == nite::JOINT_RIGHT_KNEE ) {
-                    mRightKneeX = -joint0.getPosition().x;
+                    mRightKneeX = -(joint0.getPosition().x);
                 } else if ( joint0.getType() == nite::JOINT_TORSO ) {
-                    mTorso = cv::Point( -joint0.getPosition().x, joint0.getPosition().y );
+                    mTorso = cv::Point( -(joint0.getPosition().x), joint0.getPosition().y );
                 }
 
 				const nite::SkeletonJoint& joint1 = skeleton.getJoint( mBones[i].mJointB );
 
 				Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
-				Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
+//				Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
 				v0.x = -v0.x;
-				v1.x = -v1.x;
+//				v1.x = -v1.x;
                 
                 // PRINT VALUES
-                if (mBones[i].mJointA == mBones[i].mJointA){
+//                if (mBones[i].mJointA == mBones[i].mJointA){
 //                    console() << iter->mJointA << " X:" << v0.x << " Y:" << v0.y << endl;
-                }
+//                }
                 
                 gl::vertex( v0 );
-                gl::vertex( v1 );
+//                gl::vertex( v1 );
             }
             gl::end();
             
