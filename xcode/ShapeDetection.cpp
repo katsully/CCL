@@ -71,10 +71,8 @@ void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceO
             mTrackedShapes[i].hull = nearestShape->hull;
             mTrackedShapes[i].motion = nearestShape->motion;
             Vec2f centerVec = Vec2f( mTrackedShapes[i].centroid.x, mTrackedShapes[i].centroid.y );
-            mTrackedShapes[i].mCenterTrail.push_back(centerVec);
-            if ( mTrackedShapes[i].mCenterTrail.size() > 50 ) {
-                mTrackedShapes[i].mCenterTrail.pop_front();
-            }
+            mTrackedShapes[i].arrive(centerVec);
+            mTrackedShapes[i].updateTrail();
         }
     }
     
@@ -84,6 +82,8 @@ void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceO
             // assign an unique ID
             mShapes[i].ID = shapeUID;
             mShapes[i].lastFrameSeen = ci::app::getElapsedFrames();
+            // starting point of the trail
+            mShapes[i].mLocation = Vec2f( mShapes[i].centroid.x, mShapes[i].centroid.y );
             // add this new shape to tracked shapes
             mTrackedShapes.push_back( mShapes[i] );
             shapeUID++;
