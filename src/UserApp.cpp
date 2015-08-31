@@ -81,6 +81,7 @@ private:
     bool mShowNegativeSpace = false;
     bool mShowDistanceLines = false;
     int mJointParam = 0;
+    vector<Boolean> mShowJoints;
     vector<TrailPoint> mTrails;
     //    TrailPoint mTrailPoint;
     //    std::list<Vec2f> mJointTrail;
@@ -111,15 +112,15 @@ void UserApp::draw()
     gl::clear( Color::black() );
     gl::setMatricesWindow( getWindowSize() );
     
-    gl::color( Colorf::white() );
-    if ( mShapeDetection.mSurfaceSubtract ) {
-        if ( mTexture ) {
-            mTexture->update( Channel32f( mShapeDetection.mSurfaceSubtract ) );
-        } else {
-            mTexture = gl::Texture::create( Channel32f( mShapeDetection.mSurfaceSubtract ) );
-        }
-        gl::draw( mTexture, mTexture->getBounds(), getWindowBounds() );
-    }
+    gl::color( Colorf::black() );
+//    if ( mShapeDetection.mSurfaceSubtract ) {
+//        if ( mTexture ) {
+//            mTexture->update( Channel32f( mShapeDetection.mSurfaceSubtract ) );
+//        } else {
+//            mTexture = gl::Texture::create( Channel32f( mShapeDetection.mSurfaceSubtract ) );
+//        }
+//        gl::draw( mTexture, mTexture->getBounds(), getWindowBounds() );
+//    }
     
     gl::setMatrices( mCamera );
     
@@ -133,10 +134,9 @@ void UserApp::draw()
             // this draws the first 15 points (so no joints get drawn twice)
             for ( int i=0; i<15; i++ ) {
                 gl::enableAlphaBlending();
-                gl::color( ColorA(1.0f, 1.0f, 1.0f, 0.3f) );
-                glPointSize(10.0f);
+                glPointSize(5.0f);
                 gl::disableAlphaBlending();
-                
+                gl::color( Color(0.5f, 0.5f, 0.5f) );
                 gl::begin( GL_POINTS );
                 
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
@@ -157,23 +157,16 @@ void UserApp::draw()
                 //				v1.x = -v1.x;
                 
                 gl::vertex( v0 );
-                if ( mJointParam == mBones[i].mJointA || mBones[i].mJointA == 7 ) {
-                    mTrails[i].arrive( v0 );
-                    mTrails[i].updateTrail();
-                    //                    mJointTrail.push_back(Vec2f( v0.x, v0.y ) );
-                    //                    if ( mJointTrail.size() > 200 ) {
-                    //                        mJointTrail.pop_front();
-                    //                    }
-                    //                    cout << "size " << mTrails.mTrail.size() << endl;
-                }
-                if ( mBones[i].mJointA == 10 || mBones[i].mJointA == 14 ) {
-                    mTrails[i].arrive( v0 );
-                    mTrails[i].updateTrail();
-                    //                    mJointTrail.push_back(Vec2f( v0.x, v0.y ) );
-                    //                    if ( mJointTrail.size() > 200 ) {
-                    //                        mJointTrail.pop_front();
-                    //                    }
-                    //                    cout << "size " << mTrails.mTrail.size() << endl;
+                for ( int j=0; j<mShowJoints.size(); j++ ){
+                    if ( mShowJoints[i] && j == mBones[i].mJointA) {
+                        mTrails[j].arrive( v0 );
+                        mTrails[j].updateTrail();
+                        //                    mJointTrail.push_back(Vec2f( v0.x, v0.y ) );
+                        //                    if ( mJointTrail.size() > 200 ) {
+                        //                        mJointTrail.pop_front();
+                        //                    }
+                        //                    cout << "size " << mTrails.mTrail.size() << endl;
+                    }
                 }
                 // gl::vertex( v1 );
                 gl::end();
@@ -253,7 +246,7 @@ void UserApp::draw()
     gl::setMatrices( mCamera );
     //    gl::setMatrices( getWindowBounds())
     glLineWidth(10.0f);
-//    glBegin( GL_LINE_STRIP );
+    //    glBegin( GL_LINE_STRIP );
     gl::color( Color( 1.0f, 0.08f, 0.58f) );
     float counter = 0.58f;
     float counter2 = 1.0f;
@@ -272,7 +265,7 @@ void UserApp::draw()
         //        gl::vertex( v );
         //    }
     }
-//    glEnd();
+    //    glEnd();
     
     // show if dancer is on or off balance
     if ( mUseBalance ) {
@@ -329,9 +322,6 @@ void UserApp::screenShot()
 void UserApp::setup()
 {
     mShapeDetection = ShapeDetection();
-    
-    // create vector of joint names
-    vector<string> joints = { "Head", "Neck", "Left Shoulder", "Right Shoulder", "Left Elbow", "Right Elbow", "Left Hand", "Right Hand", "Torso", "Left Hip", "Right Hip", "Left Knee", "Right Knee", "Left Foot", "Right Foot" };
     
     //	mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_NECK ) );
     //	mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_LEFT_ELBOW ) );
@@ -403,14 +393,24 @@ void UserApp::setup()
     // vector of trails
     for( int i=0; i<15; i++ ){
         mTrails.push_back(TrailPoint());
+        mShowJoints.push_back(false);
+//        mShowJoints[i] = false;
     }
+    mShowJoints[0] = true;
     
     // params window
     mParams = params::InterfaceGl( "Parameters", Vec2i( 200, 200 ) );
-    mParams.addParam( "On Balance", &mUseBalance );
-    mParams.addParam( "Negative Space", &mShowNegativeSpace );
-    mParams.addParam( "Distance Lines", &mShowDistanceLines );
-    mParams.addParam( "Follow joints", joints, &mJointParam );
+//        mParams.addParam( "On Balance", &mShowOnBalance );
+    //    mParams.addParam( "Negative Space", &mShowNegativeSpace );
+    //    mParams.addParam( "Distance Lines", &mShowDistanceLines );
+    //    mParams.addParam( "Follow joints", joints, &mJointParam );
+    // create vector of joint names
+    vector<string> joints = { "Head", "Neck", "Left Shoulder", "Right Shoulder", "Left Elbow", "Right Elbow", "Left Hand", "Right Hand", "Torso", "Left Hip", "Right Hip", "Left Knee", "Right Knee", "Left Foot", "Right Foot" };
+    for ( int i=0; i<joints.size(); i++ ) {
+        Boolean *thing = &mShowJoints[i];
+        mParams.addParam(joints[i], &mShowJoints[i]);
+    }
+    
 }
 
 CINDER_APP_BASIC( UserApp, RendererGl )

@@ -210,19 +210,21 @@ void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
     gl::setMatricesWindow( getWindowSize() );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
-        if( mTrackedShapes[i].mOffBalance && useBalance ){
-            glBegin( GL_POLYGON );
-        } else if (showNegativeSpace) {
-            glBegin( GL_TRIANGLE_FAN );
-        } else{
-            glPointSize(2.0);
-            glBegin(GL_POINTS);
-        }
+//        if( mTrackedShapes[i].mOffBalance && useBalance ){
+//            glBegin( GL_POLYGON );
+//        } else if (showNegativeSpace) {
+//            glBegin( GL_TRIANGLE_FAN );
+//        } else{
+//            glPointSize(2.0);
+//            glBegin(GL_POINTS);
+//        }
+        glLineWidth(3.0f);
+        glBegin(GL_LINE_LOOP);
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
             if (showNegativeSpace) {
                 gl::color( Color( 0.0f, 0.0f, 0.0f ) );
             } else {
-                gl::color(Color( 1.0f, 1.0f, 0.0f) );
+                gl::color(Color( 0.5f, 0.5f, 0.5f) );
             }
             
             Vec2f v = fromOcv( mTrackedShapes[i].hull[j] );
