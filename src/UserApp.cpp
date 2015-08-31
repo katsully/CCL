@@ -81,7 +81,9 @@ private:
     bool mShowNegativeSpace = false;
     bool mShowDistanceLines = false;
     int mJointParam = 0;
-    std::list<Vec3f> mJointTrail;
+    vector<TrailPoint> mTrails;
+    //    TrailPoint mTrailPoint;
+    //    std::list<Vec2f> mJointTrail;
     
     ci::CameraPersp				mCamera;
     
@@ -138,14 +140,6 @@ void UserApp::draw()
                 gl::begin( GL_POINTS );
                 
                 const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
-                if ( mJointParam == mBones[i].mJointA ) {
-                    Vec3f trailPoint = OpenNI::toVec3f(joint0.getPosition() );
-                    trailPoint.x = -trailPoint.x;
-                    mJointTrail.push_back(trailPoint);
-                    if ( mJointTrail.size() > 200 ) {
-                        mJointTrail.pop_front();
-                    }
-                }
                 
                 if (joint0.getType() == nite::JOINT_LEFT_KNEE) {
                     mLeftKnee = joint0.getPosition();
@@ -163,6 +157,24 @@ void UserApp::draw()
                 //				v1.x = -v1.x;
                 
                 gl::vertex( v0 );
+                if ( mJointParam == mBones[i].mJointA || mBones[i].mJointA == 7 ) {
+                    mTrails[i].arrive( v0 );
+                    mTrails[i].updateTrail();
+                    //                    mJointTrail.push_back(Vec2f( v0.x, v0.y ) );
+                    //                    if ( mJointTrail.size() > 200 ) {
+                    //                        mJointTrail.pop_front();
+                    //                    }
+                    //                    cout << "size " << mTrails.mTrail.size() << endl;
+                }
+                if ( mBones[i].mJointA == 10 || mBones[i].mJointA == 14 ) {
+                    mTrails[i].arrive( v0 );
+                    mTrails[i].updateTrail();
+                    //                    mJointTrail.push_back(Vec2f( v0.x, v0.y ) );
+                    //                    if ( mJointTrail.size() > 200 ) {
+                    //                        mJointTrail.pop_front();
+                    //                    }
+                    //                    cout << "size " << mTrails.mTrail.size() << endl;
+                }
                 // gl::vertex( v1 );
                 gl::end();
             }
@@ -174,7 +186,7 @@ void UserApp::draw()
             // draw negative space around the dancer
             
             if (mShowNegativeSpace) {
-
+                
                 gl::begin( GL_POLYGON );
                 
                 gl::enableAlphaBlending();
@@ -191,11 +203,11 @@ void UserApp::draw()
                     Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
                     v0.x = -v0.x;
                     v1.x = -v1.x;
-                
+                    
                     // PRINT DISTANCES
-                   //  Vec3f distPoint = v0 - v1;
-                   //  float dist = sqrt( distPoint.x * distPoint.x + distPoint.y * distPoint.y );
-                   //  cout << "the distance between " << mBones[i].mJointA << " and " << mBones[i].mJointB << " is " << dist << endl;
+                    //  Vec3f distPoint = v0 - v1;
+                    //  float dist = sqrt( distPoint.x * distPoint.x + distPoint.y * distPoint.y );
+                    //  cout << "the distance between " << mBones[i].mJointA << " and " << mBones[i].mJointB << " is " << dist << endl;
                     
                     gl::vertex( v0 );
                     gl::vertex( v1 );
@@ -209,43 +221,58 @@ void UserApp::draw()
             // draw distance lines
             
             if (mShowDistanceLines && !mShowNegativeSpace) {
-
-             gl::begin( GL_LINES );
+                
+                gl::begin( GL_LINES );
                 gl::enableAlphaBlending();
                 gl::color( ColorA(1.0f, 1.0f, 1.0f, 0.3f) );
                 gl::lineWidth(5.0f);
                 gl::disableAlphaBlending();
                 
-            for ( int i = 15; i <= 19; i++ ) {
-                
-                const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
-                const nite::SkeletonJoint& joint1 = skeleton.getJoint( mBones[i].mJointB );
-                
-                Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
-                Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
-                v0.x = -v0.x;
-                v1.x = -v1.x;
-                
-                // PRINT DISTANCES
-                Vec3f distPoint = v0 - v1;
-                float dist = sqrt( distPoint.x * distPoint.x + distPoint.y * distPoint.y );
-                cout << "the distance between " << mBones[i].mJointA << " and " << mBones[i].mJointB << " is " << dist << endl;
-                
-                gl::vertex( v0 );
-                gl::vertex( v1 );
-            }
+                for ( int i = 15; i <= 19; i++ ) {
+                    
+                    const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
+                    const nite::SkeletonJoint& joint1 = skeleton.getJoint( mBones[i].mJointB );
+                    
+                    Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
+                    Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
+                    v0.x = -v0.x;
+                    v1.x = -v1.x;
+                    
+                    // PRINT DISTANCES
+                    Vec3f distPoint = v0 - v1;
+                    float dist = sqrt( distPoint.x * distPoint.x + distPoint.y * distPoint.y );
+                    cout << "the distance between " << mBones[i].mJointA << " and " << mBones[i].mJointB << " is " << dist << endl;
+                    
+                    gl::vertex( v0 );
+                    gl::vertex( v1 );
+                }
                 gl::end();
             }
         }
     }
     gl::setMatrices( mCamera );
-    glBegin( GL_LINE_STRIP );
-    glLineWidth(35.0f);
+    //    gl::setMatrices( getWindowBounds())
+    glLineWidth(10.0f);
+//    glBegin( GL_LINE_STRIP );
     gl::color( Color( 1.0f, 0.08f, 0.58f) );
-    for( Vec3f v: mJointTrail ) {
-        gl::vertex( v );
+    float counter = 0.58f;
+    float counter2 = 1.0f;
+    for( TrailPoint trail: mTrails ) {
+        gl::color( Color( counter2, 0.08f, counter) );
+        glBegin( GL_LINE_STRIP );
+        for( Vec3f v: trail.mTrail ) {
+            //        gl::color( Color( 1.0f, 0.08f, 0.58f, (1.0 - i*2/100)) );
+            //        cout << "location" << v << endl;
+            gl::vertex( v );
+        }
+        glEnd();
+        counter += 0.05f;
+        counter2 -= 0.10f;
+        //    for( Vec2f v: mJointTrail ) {
+        //        gl::vertex( v );
+        //    }
     }
-    glEnd();
+//    glEnd();
     
     // show if dancer is on or off balance
     if ( mUseBalance ) {
@@ -372,6 +399,11 @@ void UserApp::setup()
     mDevice->getUserTracker().setSkeletonSmoothingFactor( 0.5f );
     mDevice->connectUserEventHandler( &UserApp::onUser, this );
     mDevice->start();
+    
+    // vector of trails
+    for( int i=0; i<15; i++ ){
+        mTrails.push_back(TrailPoint());
+    }
     
     // params window
     mParams = params::InterfaceGl( "Parameters", Vec2i( 200, 200 ) );

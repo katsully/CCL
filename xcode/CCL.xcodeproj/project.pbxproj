@@ -370,13 +370,13 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				468DFAFE1B93C31C003C5C31 /* TrailPoint.cpp */,
-				468DFAFF1B93C31C003C5C31 /* TrailPoint.h */,
 				AE595CF817F399A900A882A2 /* UserApp.cpp */,
 				462DA6201B90BEE600A41D68 /* ShapeDetection.cpp */,
 				462DA6211B90BEE600A41D68 /* ShapeDetection.h */,
 				462DA6231B90C12F00A41D68 /* Shape.cpp */,
 				462DA6241B90C12F00A41D68 /* Shape.h */,
+				468DFAFE1B93C31C003C5C31 /* TrailPoint.cpp */,
+				468DFAFF1B93C31C003C5C31 /* TrailPoint.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

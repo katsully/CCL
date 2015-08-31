@@ -70,7 +70,7 @@ void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceO
             mTrackedShapes[i].hull.clear();
             mTrackedShapes[i].hull = nearestShape->hull;
             mTrackedShapes[i].motion = nearestShape->motion;
-            Vec2f centerVec = Vec2f( mTrackedShapes[i].centroid.x, mTrackedShapes[i].centroid.y );
+            Vec3f centerVec = Vec3f( mTrackedShapes[i].centroid.x, mTrackedShapes[i].centroid.y, 0.0f );
             mTrackedShapes[i].mTrailPoint.arrive(centerVec);
             mTrackedShapes[i].mTrailPoint.updateTrail();
         }
@@ -83,7 +83,7 @@ void ShapeDetection::onDepth( openni::VideoFrameRef frame, const OpenNI::DeviceO
             mShapes[i].ID = shapeUID;
             mShapes[i].lastFrameSeen = ci::app::getElapsedFrames();
             // starting point of the trail
-            mShapes[i].mTrailPoint.mLocation = Vec2f( mShapes[i].centroid.x, mShapes[i].centroid.y );
+            mShapes[i].mTrailPoint.mLocation = Vec3f( mShapes[i].centroid.x, mShapes[i].centroid.y, 0.0f );
             // add this new shape to tracked shapes
             mTrackedShapes.push_back( mShapes[i] );
             shapeUID++;
@@ -150,8 +150,6 @@ Shape* ShapeDetection::findNearestMatch( Shape trackedShape, vector< Shape > &sh
     if ( shapes.empty() ) {
         return NULL;
     }
-    // finalDist keeps track of the distance between the trackedShape and the chosen candidate
-    float finalDist;
     
     for ( Shape &candidate : shapes ) {
         // find dist between the center of the contour and the shape
@@ -166,7 +164,6 @@ Shape* ShapeDetection::findNearestMatch( Shape trackedShape, vector< Shape > &sh
         if ( dist < nearestDist ) {
             nearestDist = dist;
             closestShape = &candidate;
-            finalDist = dist;
         }
     }
     return closestShape;
@@ -237,14 +234,22 @@ void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
         }
         glEnd();
         
-        glBegin( GL_LINE_STRIP );
-        glLineWidth(35.0f);
-        gl::color( Color( 0.0f, 0.75f, 1.0f) );
-        for( Vec2f v: mTrackedShapes[i].mTrailPoint.mTrail ) {
-            float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
-            float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
-            gl::vertex( newX, newY );
-        }
-        glEnd();
+//        glLineWidth(10.0f);
+//        gl::enableAlphaBlending();
+////        glEnable(GL_BLEND);
+//        gl::color(0.0f, 0.75f, 1.0f);
+//        glBegin( GL_LINE_STRIP );
+//        int counter = 50;
+//        for( Vec3f v: mTrackedShapes[i].mTrailPoint.mTrail ) {
+////            gl::color( ColorA( 0.0f, 0.75f, 1.0f, (1.0 - counter*2/100)) );
+////            glColor4f(0.0f, 0.75f, 1.0f, (1.0 - counter*2/100));
+//            float newX = lmap(v.x, 0.0f, 320.0f, 0.0f, float(getWindowWidth()));
+//            float newY = lmap(v.y, 0.0f, 240.0f, 0.0f, float(getWindowHeight()));
+//            gl::vertex( newX, newY );
+//            counter--;
+//        }
+//        glEnd();
+////        glDisable(GL_BLEND);
+//        gl::disableAlphaBlending();
     }
 }

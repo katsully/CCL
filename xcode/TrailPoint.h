@@ -16,15 +16,15 @@ class TrailPoint {
 public:
     TrailPoint();
     // keep track of centroid trail
-    Vec2f mAcceleration;
-    Vec2f mVelocity;
-    Vec2f mLocation;
+    Vec3f mAcceleration;
+    Vec3f mVelocity;
+    Vec3f mLocation;
     float mMaxSpeed;
     float mMaxForce;
     
-    std::list<Vec2f> mTrail;
+    std::list<Vec3f> mTrail;
     
-    void arrive( Vec2f centroidLocation );
-    void applyForce (Vec2f force );
+    void arrive( Vec3f centroidLocation, bool fromUser=false );
+    void applyForce (Vec3f force );
     void updateTrail();
 };
