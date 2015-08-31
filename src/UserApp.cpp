@@ -259,7 +259,7 @@ void UserApp::draw()
         glEnd();
         counter += 1;
     }
-    if ( mCounter == 500 ) {
+    if ( mCounter == 250 ) {
         mShapePoints.clear();
         mShapePoints = mTrails[0].mTrail;
         mCounter = 0;
@@ -271,9 +271,9 @@ void UserApp::draw()
     
     gl::pushModelView();
     gl::translate( 100, 100 );
-    gl::scale(0.75f, 0.75f);
+    gl::scale(0.25f, 0.25f);
     gl::color(mColors[mJointCounter]);
-    glBegin(GL_TRIANGLE_FAN);
+    glBegin(GL_LINE_STRIP);
     for (Vec3f v: mShapePoints) {
         gl::vertex(v);
     }
@@ -290,6 +290,9 @@ void UserApp::draw()
     
     // draw gui params
     mParams.draw();
+    
+    gl::color( Color::white() );
+    gl::drawSolidRect( Rectf( 0, getWindowHeight(), getWindowWidth(), 500 ) );
     mCounter++;
 }
 
