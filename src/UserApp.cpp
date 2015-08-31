@@ -261,24 +261,13 @@ void UserApp::draw()
     }
     if ( mCounter == 250 ) {
         mShapePoints.clear();
-        mShapePoints = mTrails[0].mTrail;
+        mShapePoints = mTrails[mJointCounter].mTrail;
         mCounter = 0;
         mJointCounter++;
         if (mJointCounter == 15) {
             mJointCounter = 0;
         }
     }
-    
-    gl::pushModelView();
-    gl::translate( 100, 100 );
-    gl::scale(0.25f, 0.25f);
-    gl::color(mColors[mJointCounter]);
-    glBegin(GL_LINE_STRIP);
-    for (Vec3f v: mShapePoints) {
-        gl::vertex(v);
-    }
-    glEnd();
-    gl::popModelView();
     
     // show if dancer is on or off balance
     if ( mUseBalance ) {
@@ -292,7 +281,25 @@ void UserApp::draw()
     mParams.draw();
     
     gl::color( Color::white() );
-    gl::drawSolidRect( Rectf( 0, getWindowHeight(), getWindowWidth(), 500 ) );
+    gl::drawSolidRect( Rectf( 0, getWindowHeight(), getWindowWidth(), getWindowHeight() - 100 ) );
+    
+    gl::setMatrices( mCamera );
+//    gl::setMatricesWindow( Vec2i(getWindowWidth(), getWindowHeight()) );
+    gl::pushModelView();
+//    gl::translate( mJointCounter*50 - mShapePoints.front().x, mShapePoints.front().y - 550 );
+    gl::translate( 200, 200);
+    gl::scale(0.25f, 0.25f);
+    float colorNum = mJointCounter-1;
+    if (colorNum == -1) {
+        colorNum = 14;
+    }
+    gl::color(mColors[colorNum]);
+    glBegin(GL_LINE_STRIP);
+    for (Vec3f v: mShapePoints) {
+        gl::vertex(v);
+    }
+    glEnd();
+    gl::popModelView();
     mCounter++;
 }
 
