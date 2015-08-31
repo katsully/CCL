@@ -170,10 +170,8 @@ void UserApp::draw()
                 }
                 // gl::vertex( v1 );
                 gl::end();
+                
             }
-            
-            
-            
             
             
             // draw negative space around the dancer
@@ -183,8 +181,8 @@ void UserApp::draw()
                 gl::begin( GL_POLYGON );
                 
                 gl::enableAlphaBlending();
-                gl::color( ColorA(1.0f, 0.25f, 1.0f, 0.3f) );
-                gl::lineWidth(5.0f);
+                gl::color( ColorA(1.0f, 0.8f, 0.0f, 0.5f) );
+                gl::lineWidth(1.0f);
                 gl::disableAlphaBlending();
                 
                 for ( int i = 20; i < mBones.size(); i++ ) {
@@ -218,18 +216,18 @@ void UserApp::draw()
                 gl::begin( GL_LINES );
                 gl::enableAlphaBlending();
                 gl::color( ColorA(1.0f, 1.0f, 1.0f, 0.3f) );
-                gl::lineWidth(5.0f);
+                gl::lineWidth(1.0f);
                 gl::disableAlphaBlending();
                 
                 for ( int i = 15; i <= 19; i++ ) {
-                    
+
                     const nite::SkeletonJoint& joint0 = skeleton.getJoint( mBones[i].mJointA );
                     const nite::SkeletonJoint& joint1 = skeleton.getJoint( mBones[i].mJointB );
-                    
                     Vec3f v0 = OpenNI::toVec3f( joint0.getPosition() );
                     Vec3f v1 = OpenNI::toVec3f( joint1.getPosition() );
                     v0.x = -v0.x;
                     v1.x = -v1.x;
+                    
                     
                     // PRINT DISTANCES
                     Vec3f distPoint = v0 - v1;
@@ -245,7 +243,7 @@ void UserApp::draw()
     }
     gl::setMatrices( mCamera );
     //    gl::setMatrices( getWindowBounds())
-    glLineWidth(10.0f);
+    glLineWidth(1.0f);
     //    glBegin( GL_LINE_STRIP );
     gl::color( Color( 1.0f, 0.08f, 0.58f) );
     float counter = 0.58f;
@@ -340,32 +338,32 @@ void UserApp::setup()
     //	mBones.push_back( Bone( nite::JOINT_RIGHT_KNEE,		nite::JOINT_RIGHT_FOOT ) );
     
     // POINTS
-    mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_HEAD ) );
-    mBones.push_back( Bone( nite::JOINT_NECK,			nite::JOINT_NECK ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_LEFT_SHOULDER ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_ELBOW,     nite::JOINT_LEFT_ELBOW ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,		nite::JOINT_LEFT_HAND ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_SHOULDER, nite::JOINT_RIGHT_SHOULDER ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_ELBOW,    nite::JOINT_RIGHT_ELBOW ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_HAND,     nite::JOINT_RIGHT_HAND ) );
-    mBones.push_back( Bone( nite::JOINT_TORSO,          nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_HIP,		nite::JOINT_LEFT_HIP ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_KNEE,		nite::JOINT_LEFT_KNEE ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,		nite::JOINT_LEFT_FOOT ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_HIP,		nite::JOINT_RIGHT_HIP ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_KNEE,		nite::JOINT_RIGHT_KNEE ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,		nite::JOINT_RIGHT_FOOT ) );
+    mBones.push_back( Bone( nite::JOINT_HEAD,			nite::JOINT_HEAD ) );                //0
+    mBones.push_back( Bone( nite::JOINT_NECK,			nite::JOINT_NECK ) );                //1
+    mBones.push_back( Bone( nite::JOINT_LEFT_SHOULDER,	nite::JOINT_LEFT_SHOULDER ) );       //2
+    mBones.push_back( Bone( nite::JOINT_LEFT_ELBOW,     nite::JOINT_LEFT_ELBOW ) );          //3
+    mBones.push_back( Bone( nite::JOINT_LEFT_HAND,		nite::JOINT_LEFT_HAND ) );           //4
+    mBones.push_back( Bone( nite::JOINT_RIGHT_SHOULDER, nite::JOINT_RIGHT_SHOULDER ) );      //5
+    mBones.push_back( Bone( nite::JOINT_RIGHT_ELBOW,    nite::JOINT_RIGHT_ELBOW ) );         //6
+    mBones.push_back( Bone( nite::JOINT_RIGHT_HAND,     nite::JOINT_RIGHT_HAND ) );          //7
+    mBones.push_back( Bone( nite::JOINT_TORSO,          nite::JOINT_TORSO ) );               //8
+    mBones.push_back( Bone( nite::JOINT_LEFT_HIP,		nite::JOINT_LEFT_HIP ) );            //9
+    mBones.push_back( Bone( nite::JOINT_LEFT_KNEE,		nite::JOINT_LEFT_KNEE ) );          //10
+    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,		nite::JOINT_LEFT_FOOT ) );          //11
+    mBones.push_back( Bone( nite::JOINT_RIGHT_HIP,		nite::JOINT_RIGHT_HIP ) );          //12
+    mBones.push_back( Bone( nite::JOINT_RIGHT_KNEE,		nite::JOINT_RIGHT_KNEE ) );         //13
+    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,		nite::JOINT_RIGHT_FOOT ) );         //14
     
     // DISTANCE LINES
     
     // hand to hand
     mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_RIGHT_HAND ) );
     
-    // limbs to center
+    // limbs
     mBones.push_back( Bone( nite::JOINT_LEFT_HAND,	nite::JOINT_TORSO ) );
     mBones.push_back( Bone( nite::JOINT_RIGHT_HAND,	nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,	nite::JOINT_TORSO ) );
-    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_TORSO ) );
+    mBones.push_back( Bone( nite::JOINT_LEFT_FOOT,	nite::JOINT_RIGHT_HAND ) );
+    mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_LEFT_HAND ) );
     
     //surrounding body
     mBones.push_back( Bone( nite::JOINT_RIGHT_FOOT,	nite::JOINT_LEFT_FOOT ) );
@@ -399,13 +397,19 @@ void UserApp::setup()
     mShowJoints[0] = true;
     
     // params window
-    mParams = params::InterfaceGl( "Parameters", Vec2i( 200, 200 ) );
-//        mParams.addParam( "On Balance", &mShowOnBalance );
-    //    mParams.addParam( "Negative Space", &mShowNegativeSpace );
-    //    mParams.addParam( "Distance Lines", &mShowDistanceLines );
-    //    mParams.addParam( "Follow joints", joints, &mJointParam );
-    // create vector of joint names
-    vector<string> joints = { "Head", "Neck", "Left Shoulder", "Right Shoulder", "Left Elbow", "Right Elbow", "Left Hand", "Right Hand", "Torso", "Left Hip", "Right Hip", "Left Knee", "Right Knee", "Left Foot", "Right Foot" };
+    mParams = params::InterfaceGl( "Parameters", Vec2i( 200, 500 ), ColorA( 0.0f, 0.0f, 0.0f, 0.5f ) );
+    mParams.addParam( "On Balance", &mUseBalance );
+    mParams.addParam( "Negative Space", &mShowNegativeSpace );
+    mParams.addParam( "Distance Lines", &mShowDistanceLines );
+    
+    
+    //mParams.addText("the distance between A and B is" , dist);
+    
+
+    mParams.addText( " ");
+    mParams.addText( "Follow joints:");
+    
+    vector<string> joints = { "Head", "Neck", "Left Shoulder", "Left Elbow", "Left Hand", "Right Shoulder", "Right Elbow", "Right Hand", "Torso", "Left Hip", "Left Knee", "Left Foot", "Right Hip",  "Right Knee",  "Right Foot" };
     for ( int i=0; i<joints.size(); i++ ) {
         Boolean *thing = &mShowJoints[i];
         mParams.addParam(joints[i], &mShowJoints[i]);
@@ -414,3 +418,4 @@ void UserApp::setup()
 }
 
 CINDER_APP_BASIC( UserApp, RendererGl )
+

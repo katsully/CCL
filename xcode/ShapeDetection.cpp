@@ -210,15 +210,16 @@ void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
     gl::setMatricesWindow( getWindowSize() );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
-//        if( mTrackedShapes[i].mOffBalance && useBalance ){
-//            glBegin( GL_POLYGON );
-//        } else if (showNegativeSpace) {
-//            glBegin( GL_TRIANGLE_FAN );
-//        } else{
-//            glPointSize(2.0);
-//            glBegin(GL_POINTS);
-//        }
-        glLineWidth(3.0f);
+        if( mTrackedShapes[i].mOffBalance && useBalance ){
+            glBegin( GL_POLYGON );
+        } else if (showNegativeSpace) {
+            glLineWidth(2.0f);
+            glBegin( GL_LINE_LOOP );
+        } else{
+            glLineWidth(1.0f);
+            glBegin(GL_LINE_LOOP);
+        }
+        glLineWidth(1.0f);
         glBegin(GL_LINE_LOOP);
         for( int j=0; j<mTrackedShapes[i].hull.size(); j++ ){
             if (showNegativeSpace) {
