@@ -22,7 +22,7 @@ public:
     float mMaxSpeed;
     float mMaxForce;
     
-    std::list<Vec3f> mTrail;
+    list<Vec3f> mTrail;
     
     void arrive( Vec3f centroidLocation, bool fromUser=false );
     void applyForce (Vec3f force );
