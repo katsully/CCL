@@ -207,7 +207,7 @@ void ShapeDetection::onBalance(nite::Point3f leftKnee, nite::Point3f rightKnee, 
 
 void ShapeDetection::draw( bool useBalance, bool showNegativeSpace )
 {
-    gl::setMatricesWindow( getWindowSize() );
+    gl::setMatricesWindow( Vec2i(getWindowWidth(), getWindowHeight()) );
     // draw points
     for( int i=0; i<mTrackedShapes.size(); i++){
         if( mTrackedShapes[i].mOffBalance && useBalance ){

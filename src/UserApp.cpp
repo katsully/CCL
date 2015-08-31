@@ -83,6 +83,10 @@ private:
     int mJointParam = 0;
     vector<Boolean> mShowJoints;
     vector<TrailPoint> mTrails;
+    vector<Color> mColors;
+    list<Vec3f> mShapePoints;
+    int mCounter = 0;
+    int mJointCounter = 1;
     //    TrailPoint mTrailPoint;
     //    std::list<Vec2f> mJointTrail;
     
@@ -110,7 +114,7 @@ void UserApp::draw()
 {
     gl::setViewport( getWindowBounds() );
     gl::clear( Color::black() );
-    gl::setMatricesWindow( getWindowSize() );
+    gl::setMatricesWindow( Vec2i(getWindowWidth(), getWindowHeight()) );
     
     gl::color( Colorf::black() );
 //    if ( mShapeDetection.mSurfaceSubtract ) {
@@ -242,28 +246,37 @@ void UserApp::draw()
         }
     }
     gl::setMatrices( mCamera );
-    //    gl::setMatrices( getWindowBounds())
-    glLineWidth(1.0f);
-    //    glBegin( GL_LINE_STRIP );
-    gl::color( Color( 1.0f, 0.08f, 0.58f) );
-    float counter = 0.58f;
-    float counter2 = 1.0f;
+    glLineWidth(10.0f);
+    int counter = 0;
     for( TrailPoint trail: mTrails ) {
-        gl::color( Color( counter2, 0.08f, counter) );
+        gl::color( mColors[counter] );
         glBegin( GL_LINE_STRIP );
         for( Vec3f v: trail.mTrail ) {
-            //        gl::color( Color( 1.0f, 0.08f, 0.58f, (1.0 - i*2/100)) );
-            //        cout << "location" << v << endl;
             gl::vertex( v );
         }
         glEnd();
-        counter += 0.05f;
-        counter2 -= 0.10f;
-        //    for( Vec2f v: mJointTrail ) {
-        //        gl::vertex( v );
-        //    }
+        counter += 1;
     }
-    //    glEnd();
+    if ( mCounter == 250 ) {
+        mShapePoints.clear();
+        mShapePoints = mTrails[0].mTrail;
+        mCounter = 0;
+        mJointCounter++;
+        if (mJointCounter == 15) {
+            mJointCounter = 0;
+        }
+    }
+    
+    gl::pushModelView();
+    gl::translate( 100, 100 );
+    gl::scale(0.25f, 0.25f);
+    gl::color(mColors[mJointCounter]);
+    glBegin(GL_LINE_STRIP);
+    for (Vec3f v: mShapePoints) {
+        gl::vertex(v);
+    }
+    glEnd();
+    gl::popModelView();
     
     // show if dancer is on or off balance
     if ( mUseBalance ) {
@@ -275,6 +288,10 @@ void UserApp::draw()
     
     // draw gui params
     mParams.draw();
+    
+    gl::color( Color::white() );
+    gl::drawSolidRect( Rectf( 0, getWindowHeight(), getWindowWidth(), 500 ) );
+    mCounter++;
 }
 
 void UserApp::keyDown( KeyEvent event )
@@ -395,6 +412,21 @@ void UserApp::setup()
 //        mShowJoints[i] = false;
     }
     mShowJoints[0] = true;
+    mColors.push_back( Color( 0.0f, 0.75f, 1.0f ) );
+    mColors.push_back( Color( 1.0f, 0.08f, 0.58f) );
+    mColors.push_back( Color( 1.0f, 0.0f, 1.0f ) );
+    mColors.push_back( Color( 0.0f, 1.0f, 1.0f ) );
+    mColors.push_back( Color( 0.0f, 1.0f, 0.0f ) );
+    mColors.push_back( Color( 0.48f, 0.41f, 0.93f ) );
+    mColors.push_back( Color( 0.6f, 0.2f, 0.8f ) );
+    mColors.push_back( Color( 0.12f, 0.56f, 1.0f ) );
+    mColors.push_back( Color( 0.0f, 0.81f, 0.82f ) );
+    mColors.push_back( Color( 0.75f, 0.75f, 0.75f ) );
+    mColors.push_back( Color( 0.54f, 0.17f, 0.87f ) );
+    mColors.push_back( Color( 1.0f, 0.08f, 0.58f ) );
+    mColors.push_back( Color( 1.0f, 1.0f, 1.0f ) );
+    mColors.push_back( Color( 0.29f, 0.0f, 0.51f ) );
+    mColors.push_back( Color( 0.0f, 0.0f, 1.0f ) );
     
     // params window
     mParams = params::InterfaceGl( "Parameters", Vec2i( 200, 500 ), ColorA( 0.0f, 0.0f, 0.0f, 0.5f ) );
