@@ -1091,7 +1091,7 @@
 		AEBB7F3917BAEAFA00A2CC19 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = /Users/smorad/Cinder;
+				CINDER_PATH = /Users/Kat/Cinder;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1129,7 +1129,7 @@
 		AEBB7F3A17BAEAFA00A2CC19 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = /Users/smorad/Cinder;
+				CINDER_PATH = /Users/Kat/Cinder;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

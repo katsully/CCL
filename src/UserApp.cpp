@@ -278,19 +278,20 @@ void UserApp::draw()
     // draw gui params
     mParams.draw();
     
-    gl::color( Color::white() );
-    gl::drawSolidRect( Rectf( 0, getWindowHeight(), getWindowWidth(), getWindowHeight() - 100 ) );
+//    gl::color( Color::white() );
+//    gl::drawSolidRect( Rectf( 0, getWindowHeight(), getWindowWidth(), getWindowHeight() - 100 ) );
     
     gl::setMatrices( mCamera );
 //    gl::setMatricesWindow( Vec2i(getWindowWidth(), getWindowHeight()) );
     gl::pushModelView();
 //    gl::translate( mJointCounter*50 - mShapePoints.front().x, mShapePoints.front().y - 550 );
-    gl::translate( 200, 200);
+    gl::translate( -200, -400);
     gl::scale(0.25f, 0.25f);
     float colorNum = mJointCounter-1;
     if (colorNum == -1) {
         colorNum = 14;
     }
+    glLineWidth(10.0f);
     gl::color(mColors[colorNum]);
     glBegin(GL_LINE_STRIP);
     for (Vec3f v: mShapePoints) {
